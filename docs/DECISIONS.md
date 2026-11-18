@@ -85,3 +85,46 @@ question. Each entry says what was decided and why.
   `GET /settlements/me/{id}`.
 - **Driver home** shows the earnings summary next to the verification
   checklist; if the summary fails, the rest of the page still works.
+
+## Phase 4 — trips and bookings (US-02, US-03, US-04, US-12, US-23, US-24)
+
+- **OpenAPI specs unavailable.** The Driver Management, Trip Planning, Booking
+  and Trip Execution specs answered 502/503 for about 25 minutes (Render free
+  tier), so these DTOs follow CLAUDE.md. Only Payments could be checked.
+- **Legacy ids in Trip Planning.** `TripPlanningApiService` is the only place
+  that knows `passengerId`/`driverId` are Long: numeric ids are sent as
+  numbers, UUIDs as strings, and responses are normalized to string ids.
+- **"My trip requests".** `GET /trip-requests` is not filtered by user, so the
+  service filters on the client by passenger id and the page shows a
+  "Disponible próximamente" notice. Other passengers' requests are never shown.
+- **No `GET /trip-requests/{id}`.** The detail page takes the request from the
+  list.
+- **Match proposals.** "Buscar conductores" calls
+  `POST /trip-requests/{id}/match-proposals` with an empty body; the response
+  may be one proposal or a list.
+- **Places and operationZone.** The selector offers 5 districts and 5
+  universities with fixed coordinates. `operationZone` is the district code of
+  the origin (for example `PUEBLO_LIBRE`), since no list of zones was
+  documented.
+- **Seats requested.** Between 1 and 4.
+- **Booking flow.** "Reservar" on a proposal opens
+  `/passenger/bookings/new?requestId=...`. Fare and booking need a `groupId`
+  that no endpoint returns, so that page shows "Disponible próximamente" unless
+  a `groupId` query param is present. `/passenger/bookings/:id` shows the
+  status, a refresh button and cancellation with the penalty returned by the
+  backend.
+- **Idempotency-Key.** Created with `crypto.randomUUID()` on the first
+  "Reservar" click, reused on retries after an error, and discarded once the
+  booking is accepted.
+- **Cancellable statuses.** `REQUESTED`, `GROUPED` and `CONFIRMED`.
+- **Trip Execution adapter.** Spanish statuses (`PROGRAMADO`, `EN_CURSO`,
+  `FINALIZADO`, `CANCELADO` and close variants) map to English ones; anything
+  else is `UNKNOWN` and the raw value is displayed. Boarding results map to
+  `VALID`, `INVALID` or `LOCKED`.
+- **Boarding PIN.** 4 to 6 digits, method `PIN`.
+- **Driver trips.** There is no "my trips" endpoint, so `/driver/trips` shows a
+  notice and lets the driver open a trip by its code. Because Trip Execution
+  has no authentication, the page hides the actions when the trip's
+  `driverId` is not the logged-in driver (client-side check only).
+- **Placeholder removed.** The phase 0 `ComingSoonPage` was deleted once every
+  route had its page.
