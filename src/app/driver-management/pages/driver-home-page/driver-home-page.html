@@ -1,0 +1,44 @@
+<section class="page">
+  <h1>Hola{{ profile()?.fullName ? ', ' + profile()!.fullName : '' }}</h1>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else {
+    <div class="grid">
+      <mat-card appearance="outlined" class="status-card">
+        <mat-card-header>
+          <mat-icon matCardAvatar aria-hidden="true">
+            {{ verified() ? 'verified' : 'pending_actions' }}
+          </mat-icon>
+          <mat-card-title>Estado de verificación</mat-card-title>
+          <mat-card-subtitle>
+            <app-status-chip [label]="statusLabel()" [tone]="verified() ? 'success' : 'warning'" />
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          @if (verified()) {
+            <p>Tu cuenta está verificada. ¡Ya puedes recibir viajes!</p>
+          } @else {
+            <p>
+              Completa los pasos para ser verificado: {{ completed() }} de
+              {{ checklist().length }} listos.
+            </p>
+          }
+          <mat-list>
+            @for (item of checklist(); track item.label) {
+              <a mat-list-item [routerLink]="item.link" [attr.data-state]="item.state">
+                <mat-icon matListItemIcon [class]="'state-' + item.state" aria-hidden="true">
+                  {{ stateIcons[item.state] }}
+                </mat-icon>
+                <span matListItemTitle>{{ item.label }}</span>
+                <span matListItemLine>{{ item.detail }}</span>
+              </a>
+            }
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Earnings summary is added together with Payments & Settlement. -->
+    </div>
+  }
+</section>

@@ -43,3 +43,25 @@ question. Each entry says what was decided and why.
   bounded context.
 - **Locale.** `es-PE` is registered and the default currency is PEN, so the
   standard `date` and `currency` pipes already format for Peru.
+
+## Phase 2 — driver onboarding (US-16 to US-19, US-30)
+
+- **Re-login after becoming a driver.** We do not keep the password, so after
+  the profile is created the page asks the user to confirm their password and
+  logs in again to get a DRIVER token. "Ingresar más tarde" logs out instead.
+- **Document upload.** `type` is sent as a multipart form field next to the
+  `file` part (not also as a query param, to avoid Spring joining both values).
+  The client accepts PDF, JPG and PNG up to 10 MB; the backend still decides.
+- **Latest document per type.** If a type was uploaded several times, the page
+  shows the most recent upload. Approved documents cannot be replaced from the
+  UI.
+- **Plate format.** `^[A-Z0-9]{3}-\d{3}$`: CLAUDE.md says `ABC-123`, and real
+  Peruvian plates may mix letters and digits in the first block (`A1B-234`).
+  The input uppercases and inserts the dash automatically.
+- **Vehicle year.** Between 1980 and next year (no backend rule was documented).
+- **Availability.** A 404 on `GET /drivers/me/availability` is treated as an
+  empty schedule. Times are shown as `HH:mm` even if the backend sends
+  `HH:mm:ss`. Slots of the same day cannot overlap and must end after they
+  start.
+- **Driver home.** Each request (profile, documents, vehicles) fails
+  independently, so the checklist still renders if one service is down.

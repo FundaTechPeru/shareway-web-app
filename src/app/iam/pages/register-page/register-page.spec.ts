@@ -3,7 +3,8 @@ import {Router, provideRouter} from '@angular/router';
 import {of} from 'rxjs';
 import {AuthService} from '../../../core/auth/auth.service';
 import {NotificationService} from '../../../core/notifications/notification.service';
-import {PASSWORD_PATTERN, PHONE_PATTERN, RegisterPage} from './register-page';
+import {PASSWORD_PATTERN, PHONE_PATTERN} from '../../../shared/validation/patterns';
+import {RegisterPage} from './register-page';
 
 describe('RegisterPage', () => {
   let fixture: ComponentFixture<RegisterPage>;

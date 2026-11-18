@@ -9,11 +9,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../core/auth/auth.service';
 import {NotificationService} from '../../../core/notifications/notification.service';
-
-/** 8 to 72 characters with at least one letter and one number. */
-export const PASSWORD_PATTERN = /^(?=.*[A-Za-z])(?=.*\d).{8,72}$/;
-/** Optional "+" followed by 9 to 15 digits. */
-export const PHONE_PATTERN = /^\+?\d{9,15}$/;
+import {PASSWORD_PATTERN, PHONE_PATTERN} from '../../../shared/validation/patterns';
 
 /** Passenger self-registration (US-31). */
 @Component({
