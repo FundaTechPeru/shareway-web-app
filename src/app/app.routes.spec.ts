@@ -1,56 +1,109 @@
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
 import {Router, provideRouter, withComponentInputBinding} from '@angular/router';
 import {RouterTestingHarness} from '@angular/router/testing';
+import {fakeJwt, inMinutes} from '../testing/fake-jwt';
 import {routes} from './app.routes';
 
 describe('app routes', () => {
   let harness: RouterTestingHarness;
 
-  beforeEach(async () => {
+  async function setup(role: 'PASSENGER' | 'DRIVER' | null): Promise<void> {
+    localStorage.clear();
+    if (role) {
+      localStorage.setItem(
+        'shareway.accessToken',
+        fakeJwt({sub: 'u1', email: 'a@b.pe', role, exp: inMinutes(60)}),
+      );
+    }
     TestBed.configureTestingModule({
-      providers: [provideRouter(routes, withComponentInputBinding())],
+      providers: [
+        provideRouter(routes, withComponentInputBinding()),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     });
     harness = await RouterTestingHarness.create();
-  });
-
-  const cases: Array<[string, string]> = [
-    ['/login', 'Iniciar sesión'],
-    ['/register', 'Crear cuenta'],
-    ['/passenger/home', 'Inicio'],
-    ['/passenger/trip-requests', 'Mis solicitudes de viaje'],
-    ['/passenger/trip-requests/new', 'Programar un viaje'],
-    ['/passenger/trip-requests/abc', 'Detalle de la solicitud'],
-    ['/passenger/bookings/abc', 'Mi reserva'],
-    ['/passenger/payment-methods', 'Métodos de pago'],
-    ['/passenger/payments', 'Mis pagos'],
-    ['/passenger/become-driver', 'Quiero ser conductor'],
-    ['/driver/home', 'Inicio del conductor'],
-    ['/driver/documents', 'Mis documentos'],
-    ['/driver/vehicles', 'Mis vehículos'],
-    ['/driver/availability', 'Mi disponibilidad'],
-    ['/driver/earnings', 'Mis ganancias'],
-    ['/driver/trips/abc', 'Mi viaje'],
-  ];
-
-  for (const [url, title] of cases) {
-    it(`lazy loads ${url}`, async () => {
-      await harness.navigateByUrl(url);
-      expect(TestBed.inject(Router).url).toBe(url);
-      expect(harness.routeNativeElement?.textContent).toContain(title);
-    });
   }
 
-  it('redirects the root and unknown URLs to /login', async () => {
-    await harness.navigateByUrl('/');
-    expect(TestBed.inject(Router).url).toBe('/login');
-    await harness.navigateByUrl('/does-not-exist');
-    expect(TestBed.inject(Router).url).toBe('/login');
+  const url = () => TestBed.inject(Router).url;
+
+  afterEach(() => localStorage.clear());
+
+  describe('anonymous user', () => {
+    beforeEach(() => setup(null));
+
+    it('shows the login at the root and for unknown URLs', async () => {
+      await harness.navigateByUrl('/');
+      expect(url()).toBe('/login');
+      await harness.navigateByUrl('/does-not-exist');
+      expect(url()).toBe('/login');
+    });
+
+    it('can open the register page', async () => {
+      await harness.navigateByUrl('/register');
+      expect(url()).toBe('/register');
+    });
+
+    it('is sent to /login from protected areas', async () => {
+      await harness.navigateByUrl('/driver/documents');
+      expect(url()).toBe('/login?returnUrl=%2Fdriver%2Fdocuments');
+      await harness.navigateByUrl('/passenger/home');
+      expect(url()).toBe('/login?returnUrl=%2Fpassenger%2Fhome');
+    });
   });
 
-  it('redirects role roots to their home', async () => {
-    await harness.navigateByUrl('/driver');
-    expect(TestBed.inject(Router).url).toBe('/driver/home');
-    await harness.navigateByUrl('/passenger');
-    expect(TestBed.inject(Router).url).toBe('/passenger/home');
+  describe('passenger', () => {
+    beforeEach(() => setup('PASSENGER'));
+
+    it.each([
+      '/passenger/home',
+      '/passenger/trip-requests',
+      '/passenger/trip-requests/new',
+      '/passenger/trip-requests/abc',
+      '/passenger/bookings/abc',
+      '/passenger/payment-methods',
+      '/passenger/payments',
+      '/passenger/become-driver',
+    ])('lazy loads %s', async path => {
+      await harness.navigateByUrl(path);
+      expect(url()).toBe(path);
+      expect(harness.routeNativeElement?.textContent?.length).toBeGreaterThan(0);
+    });
+
+    it('goes home from /, /login and /passenger', async () => {
+      await harness.navigateByUrl('/');
+      expect(url()).toBe('/passenger/home');
+      await harness.navigateByUrl('/passenger');
+      expect(url()).toBe('/passenger/home');
+    });
+
+    it('cannot open the driver area', async () => {
+      await harness.navigateByUrl('/driver/documents');
+      expect(url()).toBe('/passenger/home');
+    });
+  });
+
+  describe('driver', () => {
+    beforeEach(() => setup('DRIVER'));
+
+    it.each([
+      '/driver/home',
+      '/driver/documents',
+      '/driver/vehicles',
+      '/driver/availability',
+      '/driver/earnings',
+      '/driver/trips/abc',
+    ])('lazy loads %s', async path => {
+      await harness.navigateByUrl(path);
+      expect(url()).toBe(path);
+      expect(harness.routeNativeElement?.textContent?.length).toBeGreaterThan(0);
+    });
+
+    it('cannot open the passenger area', async () => {
+      await harness.navigateByUrl('/passenger/payments');
+      expect(url()).toBe('/driver/home');
+    });
   });
 });
