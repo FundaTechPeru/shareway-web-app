@@ -24,5 +24,10 @@ export const DRIVER_MANAGEMENT_ROUTES: Routes = [
     title: 'Mis vehículos · ShareWay',
     loadComponent: () => import('./pages/vehicles-page/vehicles-page').then(m => m.VehiclesPage),
   },
-  comingSoonRoute('availability', 'Mi disponibilidad'),
+  {
+    path: 'availability',
+    title: 'Mi disponibilidad · ShareWay',
+    loadComponent: () =>
+      import('./pages/availability-page/availability-page').then(m => m.AvailabilityPage),
+  },
 ];
