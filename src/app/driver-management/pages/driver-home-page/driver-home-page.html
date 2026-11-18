@@ -38,7 +38,29 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- Earnings summary is added together with Payments & Settlement. -->
+      <mat-card appearance="outlined" data-testid="earnings">
+        <mat-card-header>
+          <mat-icon matCardAvatar aria-hidden="true">payments</mat-icon>
+          <mat-card-title>Mis ganancias</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (earnings(); as e) {
+            <dl class="earnings">
+              <dt>Neto total</dt>
+              <dd>{{ e.totalNet | currency }}</dd>
+              <dt>Por cobrar</dt>
+              <dd>{{ e.pendingNet | currency }}</dd>
+              <dt>Pagado</dt>
+              <dd>{{ e.paidNet | currency }}</dd>
+            </dl>
+          } @else {
+            <p>No se pudo cargar el resumen de ganancias.</p>
+          }
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button routerLink="/driver/earnings">Ver liquidaciones</a>
+        </mat-card-actions>
+      </mat-card>
     </div>
   }
 </section>

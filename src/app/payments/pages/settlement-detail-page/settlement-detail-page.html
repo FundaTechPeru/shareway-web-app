@@ -1,0 +1,41 @@
+<section class="page">
+  <a mat-button routerLink="/driver/earnings">
+    <mat-icon>arrow_back</mat-icon>
+    Mis ganancias
+  </a>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else if (settlement(); as s) {
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Liquidación</mat-card-title>
+        <mat-card-subtitle>
+          <app-status-chip [label]="labels[s.status]" [tone]="tones[s.status]" />
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <dl class="amounts">
+          <dt>Monto bruto</dt>
+          <dd>{{ s.grossAmount | currency: s.currency }}</dd>
+          <dt>Comisión ShareWay</dt>
+          <dd>− {{ s.commissionAmount | currency: s.currency }}</dd>
+          <dt class="net">Neto para ti</dt>
+          <dd class="net">{{ s.netAmount | currency: s.currency }}</dd>
+        </dl>
+        <dl class="meta">
+          <dt>Viaje completado</dt>
+          <dd>{{ s.tripCompletedAt | date: 'medium' }}</dd>
+          <dt>Liquidación creada</dt>
+          <dd>{{ s.createdAt | date: 'medium' }}</dd>
+          <dt>Pagado</dt>
+          <dd>{{ s.paidAt ? (s.paidAt | date: 'medium') : 'Pendiente' }}</dd>
+          <dt>Viaje</dt>
+          <dd class="mono">{{ s.tripId }}</dd>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <p class="empty">No se encontró la liquidación.</p>
+  }
+</section>

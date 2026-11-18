@@ -94,6 +94,7 @@ describe('app routes', () => {
       '/driver/vehicles',
       '/driver/availability',
       '/driver/earnings',
+      '/driver/earnings/s1',
       '/driver/trips/abc',
     ])('lazy loads %s', async path => {
       await harness.navigateByUrl(path);
