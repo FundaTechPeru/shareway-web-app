@@ -65,3 +65,23 @@ question. Each entry says what was decided and why.
   start.
 - **Driver home.** Each request (profile, documents, vehicles) fails
   independently, so the checklist still renders if one service is down.
+
+## Phase 3 — payments and earnings (US-25, US-26)
+
+- **DTOs confirmed.** The Payments & Settlement OpenAPI spec (read-only GET of
+  `/v3/api-docs/payments-settlement`) matches CLAUDE.md. It also defines the
+  payment statuses `PENDING | AUTHORIZED | REJECTED | CAPTURED | VOIDED`, the
+  `last4` pattern `\d{4}` and `expMonth` 1..12 / `expYear` 2000..2100.
+- **Simulated decline.** Outside production the card form shows a "Simular
+  tarjeta rechazada" checkbox that sends `tok_declined`, so the rejection flow
+  can be demoed without inventing a card number.
+- **Expired cards.** The form rejects cards that expired before the current
+  month.
+- **Delete confirmation** is inline on the card ("¿Eliminar esta tarjeta?")
+  instead of a dialog, to keep the page simple.
+- **Payment history** shows the captured amount when present, otherwise the
+  authorized amount, and sorts by the latest relevant date.
+- **Settlement detail** has its own route (`/driver/earnings/:id`) and uses
+  `GET /settlements/me/{id}`.
+- **Driver home** shows the earnings summary next to the verification
+  checklist; if the summary fails, the rest of the page still works.
