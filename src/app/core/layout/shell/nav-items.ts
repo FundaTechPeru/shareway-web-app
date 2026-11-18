@@ -21,6 +21,7 @@ export const NAV_ITEMS: Partial<Record<Role, readonly NavItem[]>> = {
     {label: 'Documentos', icon: 'badge', link: '/driver/documents'},
     {label: 'Vehículos', icon: 'directions_car', link: '/driver/vehicles'},
     {label: 'Disponibilidad', icon: 'event_available', link: '/driver/availability'},
+    {label: 'Mis viajes', icon: 'route', link: '/driver/trips'},
     {label: 'Ganancias', icon: 'payments', link: '/driver/earnings'},
   ],
 };

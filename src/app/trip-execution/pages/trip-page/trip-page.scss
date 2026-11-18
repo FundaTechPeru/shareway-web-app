@@ -1,0 +1,79 @@
+.page {
+  padding: var(--sw-page-padding);
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  > a[mat-button] {
+    align-self: flex-start;
+  }
+}
+
+h2 {
+  font: var(--mat-sys-title-large);
+  margin: 8px 0 0;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 16px;
+
+  dt {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+mat-card-actions {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pin-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  mat-form-field {
+    flex: 1;
+    min-width: 160px;
+  }
+}
+
+.cancel {
+  display: flex;
+  flex-direction: column;
+}
+
+.cancel-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.warning {
+  padding: 8px 12px;
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+}
+
+.danger {
+  color: var(--mat-sys-error);
+}
+
+.danger-bg {
+  background: var(--mat-sys-error);
+  color: var(--mat-sys-on-error);
+}
+
+.muted {
+  color: var(--mat-sys-on-surface-variant);
+}

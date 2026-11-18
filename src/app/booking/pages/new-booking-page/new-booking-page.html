@@ -1,0 +1,50 @@
+<section class="page">
+  @if (requestId(); as rid) {
+    <a mat-button [routerLink]="['/passenger/trip-requests', rid]">
+      <mat-icon>arrow_back</mat-icon>
+      Volver a la solicitud
+    </a>
+  }
+
+  <h1>Reservar viaje</h1>
+
+  @if (!ready()) {
+    <!-- TODO(backend): an endpoint must return the groupId for this request. -->
+    <app-coming-soon-notice
+      message="La tarifa y la reserva necesitan el grupo de viaje asignado por el servicio de reservas, que aún no está disponible desde la web."
+    />
+  }
+
+  <mat-card appearance="outlined">
+    @if (loadingFare() || booking()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    <mat-card-header>
+      <mat-icon matCardAvatar aria-hidden="true">payments</mat-icon>
+      <mat-card-title>Tarifa estimada</mat-card-title>
+      @if (fare(); as f) {
+        <mat-card-subtitle>Regla de tarifa {{ f.ruleVersion }}</mat-card-subtitle>
+      }
+    </mat-card-header>
+    <mat-card-content>
+      @if (fare(); as f) {
+        <p class="amount" data-testid="fare">{{ f.amount | currency: f.currency }}</p>
+        <p class="muted">
+          Se reservará el monto en tu tarjeta y se cobrará al finalizar el viaje.
+        </p>
+      } @else {
+        <p class="muted">—</p>
+      }
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-flat-button
+        type="button"
+        (click)="reserve()"
+        [disabled]="!ready() || booking() || !fare()"
+      >
+        Reservar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>

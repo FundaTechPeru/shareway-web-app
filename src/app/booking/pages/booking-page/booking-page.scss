@@ -1,0 +1,60 @@
+.page {
+  padding: var(--sw-page-padding);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+h1 {
+  font: var(--mat-sys-headline-small);
+}
+
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  li {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font: var(--mat-sys-label-medium);
+    background: var(--mat-sys-surface-container-high);
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  li.done {
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+  }
+}
+
+mat-card-actions {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.penalty {
+  padding: 8px 12px;
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+}
+
+.confirm {
+  padding: 0 8px;
+}
+
+.danger {
+  color: var(--mat-sys-error);
+}
+
+.mono {
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.muted {
+  color: var(--mat-sys-on-surface-variant);
+}

@@ -1,5 +1,16 @@
 import {Routes} from '@angular/router';
-import {comingSoonRoute} from '../shared/coming-soon.route';
 
 /** Mounted under /passenger/bookings. */
-export const BOOKING_ROUTES: Routes = [comingSoonRoute(':id', 'Mi reserva')];
+export const BOOKING_ROUTES: Routes = [
+  {
+    path: 'new',
+    title: 'Reservar viaje · ShareWay',
+    loadComponent: () =>
+      import('./pages/new-booking-page/new-booking-page').then(m => m.NewBookingPage),
+  },
+  {
+    path: ':id',
+    title: 'Mi reserva · ShareWay',
+    loadComponent: () => import('./pages/booking-page/booking-page').then(m => m.BookingPage),
+  },
+];
