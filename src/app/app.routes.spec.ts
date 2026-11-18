@@ -63,6 +63,7 @@ describe('app routes', () => {
       '/passenger/trip-requests/new',
       '/passenger/trip-requests/abc',
       '/passenger/bookings/abc',
+      '/passenger/bookings/new?requestId=r1',
       '/passenger/payment-methods',
       '/passenger/payments',
       '/passenger/become-driver',
