@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+// ShareWay global styles and Angular Material (M3) theme.
+// Palettes are generated in `styles/_theme-colors.scss` from the brand colors:
+//   primary #0F766E (teal) · tertiary #F59E0B (amber) · neutral #5F6368.
+// Learn more at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+@use './styles/theme-colors' as shareway;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: shareway.$primary-palette,
+        tertiary: shareway.$tertiary-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+}
+
+// Brand tokens shared by custom components.
+:root {
+  --sw-content-max-width: 1200px;
+  --sw-page-padding: 16px;
+}
+
+@media (min-width: 600px) {
+  :root {
+    --sw-page-padding: 24px;
+  }
+}
