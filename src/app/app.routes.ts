@@ -1,8 +1,7 @@
 import {Routes} from '@angular/router';
-import {comingSoonRoute} from './shared/coming-soon.route';
+import {authGuard, roleGuard} from './core/guards/auth.guards';
 
-// TODO: protect /passenger and /driver with authGuard + roleGuard once IAM is
-// implemented, and replace the login redirect with the landing page.
+/** `/` shows the login (public landing); guestGuard sends users to their home. */
 export const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login'},
   {
@@ -11,10 +10,16 @@ export const routes: Routes = [
   },
   {
     path: 'passenger',
+    canActivate: [authGuard, roleGuard('PASSENGER')],
     loadComponent: () => import('./core/layout/shell/shell').then(m => m.Shell),
     children: [
       {path: '', pathMatch: 'full', redirectTo: 'home'},
-      comingSoonRoute('home', 'Inicio'),
+      {
+        path: 'home',
+        title: 'Inicio · ShareWay',
+        loadComponent: () =>
+          import('./core/layout/passenger-home/passenger-home-page').then(m => m.PassengerHomePage),
+      },
       {
         path: 'trip-requests',
         loadChildren: () =>
@@ -38,6 +43,7 @@ export const routes: Routes = [
   },
   {
     path: 'driver',
+    canActivate: [authGuard, roleGuard('DRIVER')],
     loadComponent: () => import('./core/layout/shell/shell').then(m => m.Shell),
     children: [
       {path: '', pathMatch: 'full', redirectTo: 'home'},
