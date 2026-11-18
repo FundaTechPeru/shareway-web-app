@@ -1,0 +1,52 @@
+.page {
+  padding: var(--sw-page-padding);
+  max-width: var(--sw-content-max-width);
+  margin: 0 auto;
+}
+
+h1 {
+  font: var(--mat-sys-headline-small);
+}
+
+h2 {
+  font: var(--mat-sys-title-large);
+  margin: 24px 0 8px;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .label {
+    font: var(--mat-sys-label-medium);
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  .value {
+    font: var(--mat-sys-title-large);
+  }
+}
+
+.highlight {
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.empty {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--mat-sys-on-surface-variant);
+}

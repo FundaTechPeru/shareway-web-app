@@ -1,0 +1,72 @@
+<section class="page">
+  <h1>Mis ganancias</h1>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else if (loadFailed()) {
+    <div class="empty">
+      <p>No se pudieron cargar tus ganancias.</p>
+      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
+    </div>
+  } @else {
+    @if (summary(); as s) {
+      <div class="summary" data-testid="summary">
+        <mat-card appearance="outlined" class="highlight">
+          <mat-card-content>
+            <span class="label">Ganancia neta total</span>
+            <span class="value">{{ s.totalNet | currency }}</span>
+          </mat-card-content>
+        </mat-card>
+        <mat-card appearance="outlined">
+          <mat-card-content>
+            <span class="label">Por cobrar</span>
+            <span class="value">{{ s.pendingNet | currency }}</span>
+          </mat-card-content>
+        </mat-card>
+        <mat-card appearance="outlined">
+          <mat-card-content>
+            <span class="label">Pagado</span>
+            <span class="value">{{ s.paidNet | currency }}</span>
+          </mat-card-content>
+        </mat-card>
+        <mat-card appearance="outlined">
+          <mat-card-content>
+            <span class="label">Total bruto</span>
+            <span class="value">{{ s.totalGross | currency }}</span>
+          </mat-card-content>
+        </mat-card>
+        <mat-card appearance="outlined">
+          <mat-card-content>
+            <span class="label">Comisión ShareWay</span>
+            <span class="value">{{ s.totalCommission | currency }}</span>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+
+    <h2>Liquidaciones</h2>
+    @if (settlements().length === 0) {
+      <div class="empty">
+        <mat-icon aria-hidden="true">payments</mat-icon>
+        <p>Aún no tienes liquidaciones. Aparecerán al completar tus viajes.</p>
+      </div>
+    } @else {
+      <mat-nav-list>
+        @for (settlement of settlements(); track settlement.id) {
+          <a mat-list-item [routerLink]="settlement.id" [attr.data-id]="settlement.id">
+            <span matListItemTitle class="row">
+              <span>{{ settlement.netAmount | currency: settlement.currency }}</span>
+              <app-status-chip
+                [label]="labels[settlement.status]"
+                [tone]="tones[settlement.status]"
+              />
+            </span>
+            <span matListItemLine>
+              Viaje completado el {{ settlement.tripCompletedAt | date: 'mediumDate' }}
+            </span>
+          </a>
+        }
+      </mat-nav-list>
+    }
+  }
+</section>
