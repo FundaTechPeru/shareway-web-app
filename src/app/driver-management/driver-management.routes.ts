@@ -14,7 +14,11 @@ export const BECOME_DRIVER_ROUTES: Routes = [
 /** Mounted under /driver: profile, documents, vehicles and availability. */
 export const DRIVER_MANAGEMENT_ROUTES: Routes = [
   comingSoonRoute('home', 'Inicio del conductor'),
-  comingSoonRoute('documents', 'Mis documentos'),
+  {
+    path: 'documents',
+    title: 'Mis documentos · ShareWay',
+    loadComponent: () => import('./pages/documents-page/documents-page').then(m => m.DocumentsPage),
+  },
   comingSoonRoute('vehicles', 'Mis vehículos'),
   comingSoonRoute('availability', 'Mi disponibilidad'),
 ];
