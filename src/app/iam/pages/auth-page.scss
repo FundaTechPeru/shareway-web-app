@@ -1,0 +1,69 @@
+// Shared layout for the public login and register pages.
+.auth-page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: var(--sw-page-padding);
+  box-sizing: border-box;
+  background: linear-gradient(
+    180deg,
+    var(--mat-sys-primary-container) 0%,
+    var(--mat-sys-surface) 60%
+  );
+}
+
+.hero {
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    font: var(--mat-sys-display-small);
+    color: var(--mat-sys-primary);
+  }
+
+  p {
+    margin: 8px 0 0;
+    font: var(--mat-sys-body-large);
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 16px;
+
+  button[type='submit'] {
+    margin-top: 8px;
+  }
+}
+
+mat-card-actions {
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.notice {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: var(--mat-sys-corner-medium);
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+
+  p {
+    margin: 0;
+  }
+}

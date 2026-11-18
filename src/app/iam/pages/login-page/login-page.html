@@ -1,0 +1,68 @@
+<section class="auth-page">
+  <header class="hero">
+    <h1>ShareWay</h1>
+    <p>Viajes compartidos programados con conductores verificados en Lima.</p>
+  </header>
+
+  <mat-card appearance="outlined" class="auth-card">
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    <mat-card-header>
+      <mat-card-title>Iniciar sesión</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (adminNotice()) {
+        <div class="notice" role="alert">
+          <mat-icon aria-hidden="true">admin_panel_settings</mat-icon>
+          <p>
+            Esta aplicación es para pasajeros y conductores. Como administrador, ingresa desde el
+            panel de administración de ShareWay.
+          </p>
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" formControlName="email" autocomplete="email" />
+          @if (form.controls.email.hasError('required')) {
+            <mat-error>Ingresa tu correo.</mat-error>
+          } @else if (form.controls.email.hasError('email')) {
+            <mat-error>Ingresa un correo válido.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hidePassword() ? 'password' : 'text'"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword.set(!hidePassword())"
+            [attr.aria-label]="hidePassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+          >
+            <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          @if (form.controls.password.hasError('required')) {
+            <mat-error>Ingresa tu contraseña.</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-flat-button type="submit" [disabled]="loading()">Ingresar</button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <span>¿No tienes cuenta?</span>
+      <a mat-button routerLink="/register">Regístrate</a>
+    </mat-card-actions>
+  </mat-card>
+</section>
