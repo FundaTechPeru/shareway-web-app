@@ -1,6 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 import {provideRouter} from '@angular/router';
 import {of, throwError} from 'rxjs';
+import {provideAppLocale} from '../../../../testing/locale';
+import {SettlementsApiService} from '../../../payments/services/settlements-api.service';
 import {DocumentResponse, DocumentType} from '../../model/document.model';
 import {buildChecklist} from '../../model/verification';
 import {DriverDocumentsApiService} from '../../services/driver-documents-api.service';
@@ -54,6 +56,20 @@ describe('DriverHomePage', () => {
           },
         },
         {provide: VehiclesApiService, useValue: {list: () => of([vehicle])}},
+        provideAppLocale(),
+        {
+          provide: SettlementsApiService,
+          useValue: {
+            summary: () =>
+              of({
+                totalGross: 50,
+                totalCommission: 7.5,
+                totalNet: 42.5,
+                pendingNet: 10,
+                paidNet: 32.5,
+              }),
+          },
+        },
       ],
     });
     const fixture = TestBed.createComponent(DriverHomePage);
@@ -72,6 +88,7 @@ describe('DriverHomePage', () => {
   it('shows the verified state', async () => {
     const text = await render('VERIFIED', []);
     expect(text).toContain('Tu cuenta está verificada');
+    expect(text.replace(/\s+/g, ' ')).toContain('S/ 42.50');
   });
 
   it('still renders when a request fails', async () => {

@@ -30,3 +30,18 @@ h1 {
 .state-missing {
   color: var(--mat-sys-outline);
 }
+
+.earnings {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 16px;
+
+  dt {
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  dd {
+    margin: 0;
+    font: var(--mat-sys-title-medium);
+  }
+}
