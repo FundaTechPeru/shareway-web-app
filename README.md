@@ -1,59 +1,88 @@
-# SharewayWebApp
+# ShareWay Web App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.8.
+Web application for **passengers** and **drivers** of ShareWay (startup FundaTech): scheduled shared rides with verified drivers in Lima, Peru.
 
-## Development server
+This project is part of the final assignment for the *Fundamentos de Arquitectura de Software* course (UPC). The backend follows a microservices architecture with Domain-Driven Design, and this frontend is organized by the same bounded contexts.
 
-To start a local development server, run:
+> This repo is **not** the admin panel (`shareway-admin-web`) nor the mobile app (`shareway-mobile-app`).
 
-```bash
-ng serve
-```
+## Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- [Angular](https://angular.dev) 22 — standalone components, signals, new control flow, lazy-loaded features
+- [Angular Material](https://material.angular.dev) (Material 3) with a custom ShareWay theme
+- TypeScript (strict mode + strict templates)
+- [Vitest](https://vitest.dev) via the Angular CLI unit-test builder
+- [gts](https://github.com/google/gts) (Google TypeScript Style Guide: ESLint + Prettier)
 
-## Code scaffolding
+The UI is in Spanish; code, routes and commits are in English.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Getting started
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Requirements: Node.js 24 and npm 11.
 
 ```bash
-ng generate --help
+npm ci
+npm start          # http://localhost:4200
 ```
 
-## Building
+`npm start` runs the dev server with `proxy.conf.json`, which forwards every `/api` request to the API Gateway (`https://shareway-api-gateway.onrender.com`). This avoids CORS issues during local development.
 
-To build the project run:
+> The backend runs on Render's free tier: the first request after a period of inactivity may take a while (HTTP 503/504) while the services wake up.
 
-```bash
-ng build
+### Scripts
+
+| Script          | Description                                       |
+| --------------- | ------------------------------------------------- |
+| `npm start`     | Dev server with the API proxy                     |
+| `npm run build` | Production build into `dist/shareway-web-app/`    |
+| `npm test`      | Unit tests (`npm test -- --watch=false` for CI)   |
+| `npm run lint`  | Lint and format check with gts                    |
+| `npm run fix`   | Auto-fix lint and formatting issues               |
+
+## Configuration
+
+The only setting is the API base URL, defined in Angular environment files (no secrets are stored in the code):
+
+| File                                          | `apiBaseUrl`                                          |
+| --------------------------------------------- | ----------------------------------------------------- |
+| `src/environments/environment.development.ts` | `/api/v1` (served through the dev-server proxy)       |
+| `src/environments/environment.ts`             | `https://shareway-api-gateway.onrender.com/api/v1`    |
+
+All backend calls go through the **API Gateway**; microservices are never called directly. The aggregated Swagger UI is available at <https://shareway-api-gateway.onrender.com/docs>.
+
+## Project structure
+
+```
+src/
+  app/
+    core/                # singletons: auth, HTTP interceptors, guards, layout (shell)
+    shared/              # reusable UI components, pipes and common models
+    iam/                 # login and registration (/login, /register)
+    driver-management/   # driver profile, documents, vehicles, availability
+    trip-planning/       # trip requests and match proposals
+    booking/             # fares, bookings and cancellations
+    payments/            # payment methods, payments, driver earnings
+    trip-execution/      # trip view, boarding validation, start/finish
+    app.routes.ts        # top-level routes (lazy-loads each bounded context)
+  environments/          # apiBaseUrl per environment
+  styles/                # generated Material palettes for the ShareWay theme
+  styles.scss            # global styles and Material theme
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Each bounded context contains `model/` (TypeScript interfaces matching backend DTOs), `services/` (one `*ApiService` per resource, the only place that uses `HttpClient`), `pages/`, and a `*.routes.ts` file loaded lazily from `app.routes.ts`.
 
-## Running unit tests
+## Workflow
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- **GitFlow:** `main` and `develop`; `feature/us-XX-short-description` branches start from `develop` and return via pull request; `release/x.y.z` and `hotfix/x.y.z-description` branches. Semantic versioning.
+- **Commits:** [Conventional Commits](https://www.conventionalcommits.org) (`feat:`, `fix:`, `test:`, `docs:`, `chore:`, `refactor:`).
+- **CI:** GitHub Actions (`.github/workflows/ci.yml`) runs `npm ci`, lint, tests and build on every push and pull request to `develop` and `main`.
 
-```bash
-ng test
-```
+## Deployment
 
-## Running end-to-end tests
+The app is deployed as a **Render Static Site** defined in [`render.yaml`](render.yaml) (Blueprint):
 
-For end-to-end (e2e) testing, run:
+- Build command: `npm ci && npm run build`
+- Publish directory: `dist/shareway-web-app/browser`
+- Rewrite rule: `/*` → `/index.html` so Angular's router handles every route
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+To deploy, create a new Blueprint in Render pointing to this repository.

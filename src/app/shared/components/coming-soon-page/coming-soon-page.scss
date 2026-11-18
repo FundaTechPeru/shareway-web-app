@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  padding: var(--sw-page-padding);
+  max-width: var(--sw-content-max-width);
+  margin: 0 auto;
+}
+
+.coming-soon mat-icon {
+  color: var(--mat-sys-primary);
+}
