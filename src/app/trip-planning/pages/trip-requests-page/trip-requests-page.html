@@ -1,0 +1,50 @@
+<section class="page">
+  <header class="header">
+    <h1>Mis solicitudes de viaje</h1>
+    <a mat-flat-button routerLink="/passenger/trip-requests/new">
+      <mat-icon>add_road</mat-icon>
+      Programar viaje
+    </a>
+  </header>
+
+  @if (!canListByUser) {
+    <!-- TODO(backend): GET /trip-requests must filter by the logged-in passenger (UUID). -->
+    <app-coming-soon-notice
+      message="El listado de tus solicitudes depende de una actualización del servicio de viajes. Mientras tanto, puedes ver cada solicitud justo después de crearla."
+    />
+  }
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else if (loadFailed()) {
+    <div class="empty">
+      <p>No se pudieron cargar tus solicitudes.</p>
+      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
+    </div>
+  } @else if (requests().length === 0) {
+    <div class="empty">
+      <mat-icon aria-hidden="true">route</mat-icon>
+      <p>No tienes solicitudes de viaje.</p>
+    </div>
+  } @else {
+    <mat-nav-list>
+      @for (request of requests(); track request.id) {
+        <a mat-list-item [routerLink]="request.id" [attr.data-id]="request.id">
+          <span matListItemTitle>
+            {{ request.originLabel }} → {{ request.destinationLabel }}
+          </span>
+          <span matListItemLine>
+            {{ request.travelDate | date: 'fullDate' }} · {{ request.earliestDeparture }}–{{
+              request.latestDeparture
+            }}
+          </span>
+          <app-status-chip
+            matListItemMeta
+            [label]="labels[request.status]"
+            [tone]="tones[request.status]"
+          />
+        </a>
+      }
+    </mat-nav-list>
+  }
+</section>
