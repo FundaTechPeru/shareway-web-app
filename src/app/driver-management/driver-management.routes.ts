@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {comingSoonRoute} from '../shared/coming-soon.route';
 
 /** Mounted under /passenger: become a driver (US-16). */
 export const BECOME_DRIVER_ROUTES: Routes = [
@@ -13,7 +12,12 @@ export const BECOME_DRIVER_ROUTES: Routes = [
 
 /** Mounted under /driver: profile, documents, vehicles and availability. */
 export const DRIVER_MANAGEMENT_ROUTES: Routes = [
-  comingSoonRoute('home', 'Inicio del conductor'),
+  {
+    path: 'home',
+    title: 'Inicio · ShareWay',
+    loadComponent: () =>
+      import('./pages/driver-home-page/driver-home-page').then(m => m.DriverHomePage),
+  },
   {
     path: 'documents',
     title: 'Mis documentos · ShareWay',

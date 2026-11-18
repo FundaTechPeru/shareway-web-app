@@ -1,0 +1,32 @@
+.page {
+  padding: var(--sw-page-padding);
+  max-width: var(--sw-content-max-width);
+  margin: 0 auto;
+}
+
+h1 {
+  font: var(--mat-sys-headline-small);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.state-done {
+  color: #1b7f45;
+}
+
+.state-pending {
+  color: var(--mat-sys-tertiary);
+}
+
+.state-rejected {
+  color: var(--mat-sys-error);
+}
+
+.state-missing {
+  color: var(--mat-sys-outline);
+}
