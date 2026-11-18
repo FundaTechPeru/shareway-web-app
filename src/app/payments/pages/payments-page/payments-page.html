@@ -1,0 +1,59 @@
+<section class="page">
+  <h1>Mis pagos</h1>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else if (loadFailed()) {
+    <div class="empty">
+      <p>No se pudo cargar tu historial de pagos.</p>
+      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
+    </div>
+  } @else if (sorted().length === 0) {
+    <div class="empty">
+      <mat-icon aria-hidden="true">receipt_long</mat-icon>
+      <p>Aún no tienes pagos registrados.</p>
+    </div>
+  } @else {
+    <mat-accordion>
+      @for (payment of sorted(); track payment.id) {
+        <mat-expansion-panel [attr.data-id]="payment.id">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ amount(payment) | currency: payment.currency }}
+            </mat-panel-title>
+            <mat-panel-description>
+              <app-status-chip
+                [label]="labels[payment.status]"
+                [tone]="tones[payment.status]"
+              />
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <dl class="details">
+            <dt>Monto autorizado</dt>
+            <dd>{{ payment.authorizedAmount ?? 0 | currency: payment.currency }}</dd>
+            <dt>Monto cobrado</dt>
+            <dd>{{ payment.capturedAmount ?? 0 | currency: payment.currency }}</dd>
+            @if (payment.authorizedAt) {
+              <dt>Autorizado</dt>
+              <dd>{{ payment.authorizedAt | date: 'medium' }}</dd>
+            }
+            @if (payment.capturedAt) {
+              <dt>Cobrado</dt>
+              <dd>{{ payment.capturedAt | date: 'medium' }}</dd>
+            }
+            @if (payment.voidedAt) {
+              <dt>Anulado</dt>
+              <dd>{{ payment.voidedAt | date: 'medium' }}</dd>
+            }
+            <dt>Reserva</dt>
+            <dd class="mono">{{ payment.bookingId }}</dd>
+            @if (payment.providerRef) {
+              <dt>Referencia</dt>
+              <dd class="mono">{{ payment.providerRef }}</dd>
+            }
+          </dl>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  }
+</section>
