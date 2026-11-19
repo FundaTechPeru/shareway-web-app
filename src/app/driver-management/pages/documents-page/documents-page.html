@@ -1,0 +1,71 @@
+<section class="page">
+  <h1>Mis documentos</h1>
+  <p class="lead">
+    Sube los 4 documentos en PDF, JPG o PNG (máximo 10 MB). Quedarás verificado cuando todos estén
+    aprobados y tengas un vehículo registrado.
+  </p>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else if (loadFailed()) {
+    <div class="empty">
+      <p>No se pudieron cargar tus documentos.</p>
+      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
+    </div>
+  } @else {
+    <div class="grid">
+      @for (slot of slots(); track slot.type) {
+        <mat-card appearance="outlined" [attr.data-type]="slot.type">
+          @if (uploading() === slot.type) {
+            <mat-progress-bar mode="indeterminate" />
+          }
+          <mat-card-header>
+            <mat-card-title>{{ slot.label }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            @if (slot.document; as doc) {
+              <app-status-chip
+                [label]="statusLabels[doc.status]"
+                [tone]="statusTones[doc.status]"
+              />
+              <p class="file">
+                <mat-icon aria-hidden="true">description</mat-icon>
+                <span>{{ doc.originalFilename }}</span>
+              </p>
+              <p class="meta">Subido el {{ doc.uploadedAt | date: 'medium' }}</p>
+              @if (doc.status === 'REJECTED') {
+                <p class="rejection" role="alert">
+                  <strong>Motivo del rechazo:</strong>
+                  {{ doc.rejectionReason || 'Sin motivo indicado.' }}
+                </p>
+              }
+            } @else {
+              <app-status-chip label="Sin subir" />
+              <p class="meta">Todavía no subiste este documento.</p>
+            }
+          </mat-card-content>
+          @if (slot.document?.status !== 'APPROVED') {
+            <mat-card-actions>
+              <input
+                #fileInput
+                type="file"
+                hidden
+                [accept]="accept"
+                (change)="onFileSelected(slot.type, $event)"
+              />
+              <button
+                mat-stroked-button
+                type="button"
+                [disabled]="uploading() !== null"
+                (click)="fileInput.click()"
+              >
+                <mat-icon>upload</mat-icon>
+                {{ slot.document ? 'Reemplazar' : 'Subir' }}
+              </button>
+            </mat-card-actions>
+          }
+        </mat-card>
+      }
+    </div>
+  }
+</section>

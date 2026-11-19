@@ -1,0 +1,27 @@
+.page {
+  padding: var(--sw-page-padding);
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  > a[mat-button] {
+    align-self: flex-start;
+  }
+}
+
+h1 {
+  font: var(--mat-sys-headline-small);
+  margin: 0;
+}
+
+.amount {
+  font: var(--mat-sys-display-small);
+  color: var(--mat-sys-primary);
+  margin: 8px 0;
+}
+
+.muted {
+  color: var(--mat-sys-on-surface-variant);
+}

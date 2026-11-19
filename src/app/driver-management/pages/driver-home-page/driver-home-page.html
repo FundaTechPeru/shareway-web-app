@@ -1,0 +1,66 @@
+<section class="page">
+  <h1>Hola{{ profile()?.fullName ? ', ' + profile()!.fullName : '' }}</h1>
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else {
+    <div class="grid">
+      <mat-card appearance="outlined" class="status-card">
+        <mat-card-header>
+          <mat-icon matCardAvatar aria-hidden="true">
+            {{ verified() ? 'verified' : 'pending_actions' }}
+          </mat-icon>
+          <mat-card-title>Estado de verificación</mat-card-title>
+          <mat-card-subtitle>
+            <app-status-chip [label]="statusLabel()" [tone]="verified() ? 'success' : 'warning'" />
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          @if (verified()) {
+            <p>Tu cuenta está verificada. ¡Ya puedes recibir viajes!</p>
+          } @else {
+            <p>
+              Completa los pasos para ser verificado: {{ completed() }} de
+              {{ checklist().length }} listos.
+            </p>
+          }
+          <mat-list>
+            @for (item of checklist(); track item.label) {
+              <a mat-list-item [routerLink]="item.link" [attr.data-state]="item.state">
+                <mat-icon matListItemIcon [class]="'state-' + item.state" aria-hidden="true">
+                  {{ stateIcons[item.state] }}
+                </mat-icon>
+                <span matListItemTitle>{{ item.label }}</span>
+                <span matListItemLine>{{ item.detail }}</span>
+              </a>
+            }
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card appearance="outlined" data-testid="earnings">
+        <mat-card-header>
+          <mat-icon matCardAvatar aria-hidden="true">payments</mat-icon>
+          <mat-card-title>Mis ganancias</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (earnings(); as e) {
+            <dl class="earnings">
+              <dt>Neto total</dt>
+              <dd>{{ e.totalNet | currency }}</dd>
+              <dt>Por cobrar</dt>
+              <dd>{{ e.pendingNet | currency }}</dd>
+              <dt>Pagado</dt>
+              <dd>{{ e.paidNet | currency }}</dd>
+            </dl>
+          } @else {
+            <p>No se pudo cargar el resumen de ganancias.</p>
+          }
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button routerLink="/driver/earnings">Ver liquidaciones</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  }
+</section>

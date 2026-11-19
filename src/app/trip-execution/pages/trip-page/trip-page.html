@@ -1,0 +1,129 @@
+<section class="page">
+  <a mat-button routerLink="/driver/trips">
+    <mat-icon>arrow_back</mat-icon>
+    Mis viajes
+  </a>
+
+  @if (loading() || busy()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+
+  @if (trip(); as t) {
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-icon matCardAvatar aria-hidden="true">directions_car</mat-icon>
+        <mat-card-title>Viaje</mat-card-title>
+        <mat-card-subtitle>
+          <app-status-chip
+            [label]="t.status === 'UNKNOWN' ? t.rawStatus : labels[t.status]"
+            [tone]="tones[t.status]"
+          />
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        @if (!isMine()) {
+          <p class="warning" role="alert">Este viaje no está asignado a tu cuenta.</p>
+        }
+        <dl class="details">
+          <dt>A bordo</dt>
+          <dd>{{ boardedCount() }} de {{ t.boardings.length }} pasajeros</dd>
+          @if (t.startedAt) {
+            <dt>Inicio</dt>
+            <dd>{{ t.startedAt | date: 'medium' }}</dd>
+          }
+          @if (t.finishedAt) {
+            <dt>Fin</dt>
+            <dd>{{ t.finishedAt | date: 'medium' }}</dd>
+          }
+        </dl>
+      </mat-card-content>
+      @if (isMine()) {
+        <mat-card-actions>
+          @if (t.status === 'SCHEDULED') {
+            <button mat-flat-button type="button" (click)="start()" [disabled]="busy()">
+              <mat-icon>play_arrow</mat-icon>
+              Iniciar viaje
+            </button>
+            <button
+              mat-button
+              type="button"
+              class="danger"
+              (click)="confirmingCancel.set(true)"
+              [disabled]="busy()"
+            >
+              Cancelar viaje
+            </button>
+          }
+          @if (t.status === 'IN_PROGRESS') {
+            <button mat-flat-button type="button" (click)="finish()" [disabled]="busy()">
+              <mat-icon>flag</mat-icon>
+              Finalizar viaje
+            </button>
+          }
+        </mat-card-actions>
+      }
+      @if (confirmingCancel()) {
+        <mat-card-content class="cancel">
+          <mat-form-field appearance="outline">
+            <mat-label>Motivo de la cancelación</mat-label>
+            <input matInput [formControl]="cancelReason" />
+            @if (cancelReason.invalid) {
+              <mat-error>Indica el motivo.</mat-error>
+            }
+          </mat-form-field>
+          <div class="cancel-actions">
+            <button mat-button type="button" (click)="confirmingCancel.set(false)">Volver</button>
+            <button mat-flat-button type="button" class="danger-bg" (click)="cancel()">
+              Confirmar cancelación
+            </button>
+          </div>
+        </mat-card-content>
+      }
+    </mat-card>
+
+    <h2>Abordaje de pasajeros</h2>
+    @for (boarding of t.boardings; track boarding.bookingId) {
+      <mat-card appearance="outlined" class="boarding" [attr.data-booking]="boarding.bookingId">
+        <mat-card-header>
+          <mat-icon matCardAvatar aria-hidden="true">
+            {{ boarding.boarded ? 'how_to_reg' : boarding.locked ? 'lock' : 'person' }}
+          </mat-icon>
+          <mat-card-title>Reserva {{ boarding.bookingId.slice(0, 8) }}</mat-card-title>
+          <mat-card-subtitle>
+            @if (boarding.boarded) {
+              A bordo desde {{ boarding.boardedAt | date: 'shortTime' }}
+            } @else if (boarding.locked) {
+              Bloqueado por intentos fallidos
+            } @else {
+              Pendiente · {{ boarding.failedAttempts }} intento(s) fallido(s)
+            }
+          </mat-card-subtitle>
+        </mat-card-header>
+        @if (isMine() && !boarding.boarded && !boarding.locked && t.status === 'SCHEDULED') {
+          <mat-card-content>
+            <form class="pin-form" (ngSubmit)="validate(boarding)" novalidate>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>PIN del pasajero</mat-label>
+                <input
+                  matInput
+                  [formControl]="pin(boarding)"
+                  inputmode="numeric"
+                  maxlength="6"
+                  autocomplete="off"
+                />
+                @if (pin(boarding).invalid && pin(boarding).touched) {
+                  <mat-error>Ingresa un PIN de 4 a 6 dígitos.</mat-error>
+                }
+              </mat-form-field>
+              <button mat-stroked-button type="submit" [disabled]="busy()">Validar</button>
+            </form>
+          </mat-card-content>
+        }
+      </mat-card>
+    } @empty {
+      <p class="muted">Este viaje no tiene pasajeros.</p>
+    }
+  } @else if (!loading()) {
+    <p class="muted">No se pudo cargar el viaje.</p>
+  }
+</section>

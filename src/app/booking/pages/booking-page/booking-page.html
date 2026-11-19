@@ -1,0 +1,71 @@
+<section class="page">
+  <h1>Mi reserva</h1>
+
+  <mat-card appearance="outlined">
+    @if (loading() || cancelling()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    @if (booking(); as b) {
+      <mat-card-header>
+        <mat-icon matCardAvatar aria-hidden="true">confirmation_number</mat-icon>
+        <mat-card-title>Reserva</mat-card-title>
+        <mat-card-subtitle>
+          <app-status-chip [label]="labels[b.status]" [tone]="tones[b.status]" />
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        @if (b.status !== 'CANCELLED') {
+          <ol class="steps">
+            @for (step of steps; track step; let i = $index) {
+              <li [class.done]="i <= stepIndex()">{{ labels[step] }}</li>
+            }
+          </ol>
+        }
+
+        @if (cancellation(); as c) {
+          <p class="penalty" data-testid="penalty">
+            @if (c.penaltyAmount > 0) {
+              Se aplicó una penalidad de {{ c.penaltyAmount | currency: c.currency }} por
+              cancelar.
+            } @else {
+              Cancelaste sin penalidad.
+            }
+          </p>
+        }
+
+        <p class="mono muted">{{ b.bookingId }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button type="button" (click)="refresh()" [disabled]="loading()">
+          <mat-icon>refresh</mat-icon>
+          Actualizar
+        </button>
+        @if (canCancel()) {
+          @if (confirmingCancel()) {
+            <span class="confirm">¿Cancelar la reserva? Podría aplicarse una penalidad.</span>
+            <button mat-button type="button" (click)="confirmingCancel.set(false)">No</button>
+            <button mat-button type="button" class="danger" (click)="cancel()">
+              Sí, cancelar
+            </button>
+          } @else {
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="confirmingCancel.set(true)"
+              [disabled]="cancelling()"
+            >
+              Cancelar reserva
+            </button>
+          }
+        }
+      </mat-card-actions>
+    } @else if (!loading()) {
+      <mat-card-content>
+        <p class="muted">No se pudo cargar la reserva.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button type="button" (click)="refresh()">Reintentar</button>
+      </mat-card-actions>
+    }
+  </mat-card>
+</section>

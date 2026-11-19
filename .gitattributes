@@ -1,0 +1,5 @@
+# Keep LF line endings in the repo and working tree (required by Prettier/gts).
+* text=auto eol=lf
+*.ico binary
+*.png binary
+*.jpg binary

@@ -1,0 +1,38 @@
+.page {
+  padding: var(--sw-page-padding);
+  max-width: var(--sw-content-max-width);
+  margin: 0 auto;
+}
+
+h1 {
+  font: var(--mat-sys-headline-small);
+  margin: 0;
+}
+
+.lead {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.link-card {
+  text-decoration: none;
+  color: inherit;
+
+  mat-card {
+    height: 100%;
+  }
+
+  mat-icon {
+    color: var(--mat-sys-primary);
+  }
+
+  &:hover mat-card,
+  &:focus-visible mat-card {
+    background: var(--mat-sys-surface-container);
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://shareway-api-gateway.onrender.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+}

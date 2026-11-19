@@ -1,0 +1,147 @@
+<section class="page">
+  <header class="header">
+    <h1>Métodos de pago</h1>
+    @if (!showForm()) {
+      <button mat-flat-button type="button" (click)="openForm()">
+        <mat-icon>add_card</mat-icon>
+        Agregar tarjeta
+      </button>
+    }
+  </header>
+
+  @if (showForm()) {
+    <mat-card appearance="outlined" class="form-card">
+      @if (saving()) {
+        <mat-progress-bar mode="indeterminate" />
+      }
+      <mat-card-header>
+        <mat-card-title>Nueva tarjeta</mat-card-title>
+        <mat-card-subtitle>
+          Por tu seguridad, solo guardamos la marca, los últimos 4 dígitos y el vencimiento.
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="save()" novalidate class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Marca</mat-label>
+            <mat-select formControlName="brand">
+              @for (brand of brands; track brand) {
+                <mat-option [value]="brand">{{ brandLabels[brand] }}</mat-option>
+              }
+            </mat-select>
+            @if (form.controls.brand.invalid) {
+              <mat-error>Elige la marca.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Últimos 4 dígitos</mat-label>
+            <input
+              matInput
+              formControlName="last4"
+              inputmode="numeric"
+              maxlength="4"
+              autocomplete="off"
+            />
+            @if (form.controls.last4.hasError('required')) {
+              <mat-error>Ingresa los últimos 4 dígitos.</mat-error>
+            } @else if (form.controls.last4.hasError('pattern')) {
+              <mat-error>Deben ser 4 dígitos.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Mes de vencimiento</mat-label>
+            <mat-select formControlName="expMonth">
+              @for (month of months; track month) {
+                <mat-option [value]="month">{{ month < 10 ? '0' + month : month }}</mat-option>
+              }
+            </mat-select>
+            @if (form.controls.expMonth.invalid) {
+              <mat-error>Elige el mes.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Año de vencimiento</mat-label>
+            <mat-select formControlName="expYear">
+              @for (year of years; track year) {
+                <mat-option [value]="year">{{ year }}</mat-option>
+              }
+            </mat-select>
+            @if (form.controls.expYear.invalid) {
+              <mat-error>Elige el año.</mat-error>
+            }
+          </mat-form-field>
+
+          @if (form.hasError('expired') && (form.touched || form.dirty)) {
+            <p class="error full">La tarjeta está vencida.</p>
+          }
+
+          @if (canSimulateDecline) {
+            <mat-checkbox formControlName="simulateDecline" class="full">
+              Simular tarjeta rechazada (solo pruebas)
+            </mat-checkbox>
+          }
+
+          <div class="actions full">
+            <button mat-button type="button" (click)="closeForm()">Cancelar</button>
+            <button mat-flat-button type="submit" [disabled]="saving()">Guardar</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else if (loadFailed()) {
+    <div class="empty">
+      <p>No se pudieron cargar tus tarjetas.</p>
+      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
+    </div>
+  } @else if (methods().length === 0) {
+    <div class="empty">
+      <mat-icon aria-hidden="true">credit_card_off</mat-icon>
+      <p>Aún no registraste ninguna tarjeta.</p>
+    </div>
+  } @else {
+    <div class="grid">
+      @for (method of methods(); track method.id) {
+        <mat-card appearance="outlined" [attr.data-id]="method.id">
+          @if (deleting() === method.id) {
+            <mat-progress-bar mode="indeterminate" />
+          }
+          <mat-card-header>
+            <mat-icon matCardAvatar aria-hidden="true">credit_card</mat-icon>
+            <mat-card-title>{{ brandLabels[method.brand] }} •••• {{ method.last4 }}</mat-card-title>
+            <mat-card-subtitle>
+              Vence {{ method.expMonth < 10 ? '0' + method.expMonth : method.expMonth }}/{{
+                method.expYear
+              }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            @if (confirmingDelete() === method.id) {
+              <span class="confirm">¿Eliminar esta tarjeta?</span>
+              <button mat-button type="button" (click)="confirmingDelete.set(null)">No</button>
+              <button mat-button type="button" class="danger" (click)="remove(method.id)">
+                Sí, eliminar
+              </button>
+            } @else {
+              <button
+                mat-button
+                type="button"
+                [disabled]="deleting() !== null"
+                (click)="confirmingDelete.set(method.id)"
+              >
+                <mat-icon>delete</mat-icon>
+                Eliminar
+              </button>
+            }
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</section>

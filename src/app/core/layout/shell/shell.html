@@ -1,0 +1,52 @@
+<mat-sidenav-container class="container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    [mode]="isHandset() ? 'over' : 'side'"
+    [opened]="!isHandset()"
+    [attr.role]="isHandset() ? 'dialog' : 'navigation'"
+  >
+    <mat-toolbar class="sidenav-header">Menú</mat-toolbar>
+    <mat-nav-list>
+      @for (item of navItems(); track item.link) {
+        <a
+          mat-list-item
+          [routerLink]="item.link"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [routerLinkActiveOptions]="{exact: true}"
+          [activated]="rla.isActive"
+          (click)="isHandset() && drawer.close()"
+        >
+          <mat-icon matListItemIcon aria-hidden="true">{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar">
+      @if (isHandset()) {
+        <button mat-icon-button type="button" aria-label="Abrir menú" (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+      <a [routerLink]="homeUrl()" class="brand">ShareWay</a>
+      <span class="spacer"></span>
+      <span class="user-name" data-testid="user-name">{{ displayName() }}</span>
+      <button
+        mat-icon-button
+        type="button"
+        aria-label="Cerrar sesión"
+        matTooltip="Cerrar sesión"
+        (click)="logout()"
+      >
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+    <main>
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
