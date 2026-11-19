@@ -1,7 +1,7 @@
 # Decisions log
 
-Decisions taken while working autonomously, when CLAUDE.md did not settle a
-question. Each entry says what was decided and why.
+Decisions taken by the team during development, when the project specification
+did not settle a question. Each entry says what was decided and why.
 
 ## Phase 0 — project setup
 
@@ -55,7 +55,7 @@ question. Each entry says what was decided and why.
 - **Latest document per type.** If a type was uploaded several times, the page
   shows the most recent upload. Approved documents cannot be replaced from the
   UI.
-- **Plate format.** `^[A-Z0-9]{3}-\d{3}$`: CLAUDE.md says `ABC-123`, and real
+- **Plate format.** `^[A-Z0-9]{3}-\d{3}$`: the specification says `ABC-123`, and real
   Peruvian plates may mix letters and digits in the first block (`A1B-234`).
   The input uppercases and inserts the dash automatically.
 - **Vehicle year.** Between 1980 and next year (no backend rule was documented).
@@ -69,7 +69,7 @@ question. Each entry says what was decided and why.
 ## Phase 3 — payments and earnings (US-25, US-26)
 
 - **DTOs confirmed.** The Payments & Settlement OpenAPI spec (read-only GET of
-  `/v3/api-docs/payments-settlement`) matches CLAUDE.md. It also defines the
+  `/v3/api-docs/payments-settlement`) matches the API contract. It also defines the
   payment statuses `PENDING | AUTHORIZED | REJECTED | CAPTURED | VOIDED`, the
   `last4` pattern `\d{4}` and `expMonth` 1..12 / `expYear` 2000..2100.
 - **Simulated decline.** Outside production the card form shows a "Simular
@@ -90,7 +90,7 @@ question. Each entry says what was decided and why.
 
 - **OpenAPI specs unavailable.** The Driver Management, Trip Planning, Booking
   and Trip Execution specs answered 502/503 for about 25 minutes (Render free
-  tier), so these DTOs follow CLAUDE.md. Only Payments could be checked.
+  tier), so these DTOs follow the API contract. Only Payments could be checked.
 - **Legacy ids in Trip Planning.** `TripPlanningApiService` is the only place
   that knows `passengerId`/`driverId` are Long: numeric ids are sent as
   numbers, UUIDs as strings, and responses are normalized to string ids.

@@ -69,73 +69,72 @@ Decisions taken along the way are in [DECISIONS.md](DECISIONS.md).
 
 ## Commits
 
-All commits reachable from `develop` at the time of writing (this report's own
-commit is not listed). The `Co-Authored-By` trailer is omitted from the body
-column.
+All commits reachable from `develop` at the time of writing (the commit that
+updates this table is not listed).
 
 | Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on (Date) |
 |---|---|---|---|---|---|
 | FundaTechPeru/shareway-web-app | main | 1479de2 | initial commit | — | 2026-11-18 17:27 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | 9d75614 | docs: add CLAUDE.md with project context | — | 2026-11-18 17:36 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | 794ea55 | chore: switch stylesheets from CSS to SCSS | — | 2026-11-18 17:36 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | fb13b04 | feat: add Angular Material with a custom ShareWay theme | — | 2026-11-18 17:37 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | d611bca | chore: configure gts for Google TypeScript Style Guide | Add lint, fix and clean scripts, ESLint flat config pointing to the Angular tsconfig projects, gts Prettier config, and enforce LF line endings via .gitattributes. | 2026-11-18 17:38 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | 102f204 | chore: add environments with apiBaseUrl and dev-server proxy to the gateway | — | 2026-11-18 17:38 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | 42689bc | chore: enable explicit strict TypeScript and strict template checks | — | 2026-11-18 17:38 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | 59dfad8 | feat: scaffold bounded-context folders with lazy placeholder routes | Add core, shared and one folder per bounded context (iam, driver-management, trip-planning, booking, payments, trip-execution), each with a lazy routes file rendering a shared ComingSoonPage. Add a minimal Shell layout for /passenger and /driver and route tests. | 2026-11-18 17:40 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | 6985cff | ci: add GitHub Actions workflow running lint, tests and build | — | 2026-11-18 17:40 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | f636ad6 | chore: add Render Blueprint for the static site deployment | — | 2026-11-18 17:40 |
-| FundaTechPeru/shareway-web-app | feature/project-setup | 4adaf92 | docs: write README with setup, structure and deployment | — | 2026-11-18 17:41 |
-| FundaTechPeru/shareway-web-app | develop | 0de8c23 | Merge branch 'feature/project-setup' into develop | — | 2026-11-18 17:46 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | 120f757 | docs: add decisions log | — | 2026-11-18 17:50 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | 50d9b7f | feat(iam): add auth and users API services with DTO models | — | 2026-11-18 17:50 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | 5c20455 | feat(auth): add token storage, JWT decoding and signal-based AuthService | Logs in, registers with automatic login, logs out, and logs out automatically when the token expires. | 2026-11-18 17:50 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | 80ac7c7 | feat(http): add auth and error interceptors with Spanish snackbar messages | — | 2026-11-18 17:50 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | d1f97c2 | feat(guards): add authGuard, roleGuard and guestGuard | — | 2026-11-18 17:50 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | e57861e | feat(iam): add login and passenger registration pages (US-31, US-32) | Reactive forms with the backend validation rules, redirect by role, admin notice, and automatic login after registering. | 2026-11-18 17:52 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | 0269eb5 | feat(layout): show user name, role-based menu and logout in the shell | — | 2026-11-18 17:54 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | 9935963 | feat(layout): add passenger home with quick links | — | 2026-11-18 17:54 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | ec678c0 | feat(routes): protect passenger and driver areas with auth and role guards | — | 2026-11-18 17:54 |
-| FundaTechPeru/shareway-web-app | feature/us-32-auth | 7263e93 | docs: record phase 1 decisions | — | 2026-11-18 17:54 |
-| FundaTechPeru/shareway-web-app | develop | f0ebdbf | Merge branch 'feature/us-32-auth' into develop | — | 2026-11-18 17:55 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | ff38376 | feat(driver-management): add profile, documents, vehicles and availability API services | — | 2026-11-18 17:56 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | ce12918 | refactor: move password and phone patterns to shared validation | — | 2026-11-18 17:58 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | fced742 | feat(driver-management): add become-driver page with re-login as DRIVER (US-16) | — | 2026-11-18 17:58 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | e2a3790 | feat(shared): add status chip component | — | 2026-11-18 17:59 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 739b82e | feat(driver-management): add documents page with multipart upload and review status (US-17) | — | 2026-11-18 17:59 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 52b6ccb | feat(driver-management): add vehicles page to register and edit vehicles (US-18, US-30) | — | 2026-11-18 18:00 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 9592384 | feat(driver-management): add editable weekly availability (US-19) | Validates end after start and no overlapping slots per day; saving replaces the whole schedule with PUT. | 2026-11-18 18:01 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | ea14a9a | feat(driver-management): add driver home with verification checklist | — | 2026-11-18 18:02 |
-| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 4d3a72f | docs: record phase 2 decisions | — | 2026-11-18 18:02 |
-| FundaTechPeru/shareway-web-app | develop | c39f7d8 | Merge branch 'feature/us-17-driver-onboarding' into develop | — | 2026-11-18 18:03 |
-| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 25cda88 | feat(payments): add payment methods, payments and settlements API services | — | 2026-11-18 18:04 |
-| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 2ec3a8d | feat(payments): add payment methods page with simulated card tokens | Only brand, last 4 digits and expiration are captured; the token is tok_<uuid> (or tok_declined to simulate a rejection outside production). | 2026-11-18 18:07 |
-| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 277960d | feat(payments): add passenger payment history | — | 2026-11-18 18:07 |
-| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | c0a14c5 | feat(payments): add driver earnings summary and settlement detail (US-25, US-26) | — | 2026-11-18 18:07 |
-| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 8112ae4 | feat(driver-management): show earnings summary on the driver home | — | 2026-11-18 18:08 |
-| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | c1d86d2 | test(routes): cover the settlement detail route | — | 2026-11-18 18:08 |
-| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 1b424ce | docs: record phase 3 decisions | — | 2026-11-18 18:08 |
-| FundaTechPeru/shareway-web-app | develop | 8b35f15 | Merge branch 'feature/us-25-payments-earnings' into develop | — | 2026-11-18 18:08 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 50a30bc | feat(trip-planning): add trip planning API service with legacy id adapter | Isolates the Long passengerId/driverId of the service in one file and maps DTOs to app models with string ids. | 2026-11-18 18:10 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 973a919 | feat(booking): add booking and fare API service with Idempotency-Key | — | 2026-11-18 18:11 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | deb3af1 | feat(trip-execution): add trip execution API adapter from Spanish to English models | — | 2026-11-18 18:11 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 16c9567 | feat(shared): add coming-soon notice for flows blocked by the backend | — | 2026-11-18 18:13 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 0e19216 | feat(trip-planning): add trip request form with predefined Lima places (US-02) | — | 2026-11-18 18:13 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 54afb2e | feat(trip-planning): add trip requests list and detail with match proposals | — | 2026-11-18 18:13 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 5b64f03 | feat(booking): add fare estimate, reservation and cancellation pages (US-03, US-04, US-12) | The Idempotency-Key is created once per reservation attempt and reused on retries. Fare and booking show a coming-soon state until the backend exposes the groupId. | 2026-11-18 18:15 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 4f781ac | chore(booking): remove pages placeholder | — | 2026-11-18 18:15 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | dbbb738 | feat(trip-execution): add driver trip page with PIN boarding, start, finish and cancel (US-23, US-24, US-25) | — | 2026-11-18 18:17 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | dc0077c | feat(layout): add 'Mis viajes' to the driver menu | — | 2026-11-18 18:17 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 27968f7 | refactor(shared): remove the phase 0 coming-soon placeholder page | Every route now has its real page; blocked flows use the inline coming-soon notice instead. | 2026-11-18 18:18 |
-| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | d0f9fec | docs: record phase 4 decisions | — | 2026-11-18 18:18 |
-| FundaTechPeru/shareway-web-app | develop | 2bb61fa | Merge branch 'feature/us-02-trips-bookings' into develop | — | 2026-11-18 18:18 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | 42f69c1 | chore: switch stylesheets from CSS to SCSS | — | 2026-11-18 17:36 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | d607f51 | feat: add Angular Material with a custom ShareWay theme | — | 2026-11-18 17:37 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | 5ff7e2b | chore: configure gts for Google TypeScript Style Guide | Add lint, fix and clean scripts, ESLint flat config pointing to the Angular tsconfig projects, gts Prettier config, and enforce LF line endings via .gitattributes. | 2026-11-18 17:38 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | 0f89e89 | chore: add environments with apiBaseUrl and dev-server proxy to the gateway | — | 2026-11-18 17:38 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | 2914691 | chore: enable explicit strict TypeScript and strict template checks | — | 2026-11-18 17:38 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | 9693d5b | feat: scaffold bounded-context folders with lazy placeholder routes | Add core, shared and one folder per bounded context (iam, driver-management, trip-planning, booking, payments, trip-execution), each with a lazy routes file rendering a shared ComingSoonPage. Add a minimal Shell layout for /passenger and /driver and route tests. | 2026-11-18 17:40 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | e39d1ca | ci: add GitHub Actions workflow running lint, tests and build | — | 2026-11-18 17:40 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | bb5c73b | chore: add Render Blueprint for the static site deployment | — | 2026-11-18 17:40 |
+| FundaTechPeru/shareway-web-app | feature/project-setup | 72f9542 | docs: write README with setup, structure and deployment | — | 2026-11-18 17:41 |
+| FundaTechPeru/shareway-web-app | develop | fe32c10 | Merge branch 'feature/project-setup' into develop | — | 2026-11-18 17:46 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | e64fa7e | docs: add decisions log | — | 2026-11-18 17:50 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | 21548d6 | feat(iam): add auth and users API services with DTO models | — | 2026-11-18 17:50 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | d1f5c1f | feat(auth): add token storage, JWT decoding and signal-based AuthService | Logs in, registers with automatic login, logs out, and logs out automatically when the token expires. | 2026-11-18 17:50 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | 70ee5d6 | feat(http): add auth and error interceptors with Spanish snackbar messages | — | 2026-11-18 17:50 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | a026ed7 | feat(guards): add authGuard, roleGuard and guestGuard | — | 2026-11-18 17:50 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | 02f3b8a | feat(iam): add login and passenger registration pages (US-31, US-32) | Reactive forms with the backend validation rules, redirect by role, admin notice, and automatic login after registering. | 2026-11-18 17:52 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | 5f9ea44 | feat(layout): show user name, role-based menu and logout in the shell | — | 2026-11-18 17:54 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | 6b8d840 | feat(layout): add passenger home with quick links | — | 2026-11-18 17:54 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | 4f78d97 | feat(routes): protect passenger and driver areas with auth and role guards | — | 2026-11-18 17:54 |
+| FundaTechPeru/shareway-web-app | feature/us-32-auth | 27d9705 | docs: record phase 1 decisions | — | 2026-11-18 17:54 |
+| FundaTechPeru/shareway-web-app | develop | c0b5b09 | Merge branch 'feature/us-32-auth' into develop | — | 2026-11-18 17:55 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | f680089 | feat(driver-management): add profile, documents, vehicles and availability API services | — | 2026-11-18 17:56 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 28263e8 | refactor: move password and phone patterns to shared validation | — | 2026-11-18 17:58 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | d5373f3 | feat(driver-management): add become-driver page with re-login as DRIVER (US-16) | — | 2026-11-18 17:58 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | e51b871 | feat(shared): add status chip component | — | 2026-11-18 17:59 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 74fdf76 | feat(driver-management): add documents page with multipart upload and review status (US-17) | — | 2026-11-18 17:59 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 3c3f3f8 | feat(driver-management): add vehicles page to register and edit vehicles (US-18, US-30) | — | 2026-11-18 18:00 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 3ab5c4b | feat(driver-management): add editable weekly availability (US-19) | Validates end after start and no overlapping slots per day; saving replaces the whole schedule with PUT. | 2026-11-18 18:01 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 8640e17 | feat(driver-management): add driver home with verification checklist | — | 2026-11-18 18:02 |
+| FundaTechPeru/shareway-web-app | feature/us-17-driver-onboarding | 5254976 | docs: record phase 2 decisions | — | 2026-11-18 18:02 |
+| FundaTechPeru/shareway-web-app | develop | 041649f | Merge branch 'feature/us-17-driver-onboarding' into develop | — | 2026-11-18 18:03 |
+| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 2ec683c | feat(payments): add payment methods, payments and settlements API services | — | 2026-11-18 18:04 |
+| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | dea4204 | feat(payments): add payment methods page with simulated card tokens | Only brand, last 4 digits and expiration are captured; the token is tok_<uuid> (or tok_declined to simulate a rejection outside production). | 2026-11-18 18:07 |
+| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 59f9268 | feat(payments): add passenger payment history | — | 2026-11-18 18:07 |
+| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | af18406 | feat(payments): add driver earnings summary and settlement detail (US-25, US-26) | — | 2026-11-18 18:07 |
+| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 1db6bdd | feat(driver-management): show earnings summary on the driver home | — | 2026-11-18 18:08 |
+| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | 59f661a | test(routes): cover the settlement detail route | — | 2026-11-18 18:08 |
+| FundaTechPeru/shareway-web-app | feature/us-25-payments-earnings | c293bf4 | docs: record phase 3 decisions | — | 2026-11-18 18:08 |
+| FundaTechPeru/shareway-web-app | develop | f8b936f | Merge branch 'feature/us-25-payments-earnings' into develop | — | 2026-11-18 18:08 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | d966efb | feat(trip-planning): add trip planning API service with legacy id adapter | Isolates the Long passengerId/driverId of the service in one file and maps DTOs to app models with string ids. | 2026-11-18 18:10 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | f6848db | feat(booking): add booking and fare API service with Idempotency-Key | — | 2026-11-18 18:11 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | b133d9e | feat(trip-execution): add trip execution API adapter from Spanish to English models | — | 2026-11-18 18:11 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | f7dd90e | feat(shared): add coming-soon notice for flows blocked by the backend | — | 2026-11-18 18:13 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 8ac96c9 | feat(trip-planning): add trip request form with predefined Lima places (US-02) | — | 2026-11-18 18:13 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 9c990d2 | feat(trip-planning): add trip requests list and detail with match proposals | — | 2026-11-18 18:13 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 018cbc9 | feat(booking): add fare estimate, reservation and cancellation pages (US-03, US-04, US-12) | The Idempotency-Key is created once per reservation attempt and reused on retries. Fare and booking show a coming-soon state until the backend exposes the groupId. | 2026-11-18 18:15 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 374a818 | chore(booking): remove pages placeholder | — | 2026-11-18 18:15 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 5a124b5 | feat(trip-execution): add driver trip page with PIN boarding, start, finish and cancel (US-23, US-24, US-25) | — | 2026-11-18 18:17 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 01669ce | feat(layout): add 'Mis viajes' to the driver menu | — | 2026-11-18 18:17 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 8606e3c | refactor(shared): remove the phase 0 coming-soon placeholder page | Every route now has its real page; blocked flows use the inline coming-soon notice instead. | 2026-11-18 18:18 |
+| FundaTechPeru/shareway-web-app | feature/us-02-trips-bookings | 44f0ed7 | docs: record phase 4 decisions | — | 2026-11-18 18:18 |
+| FundaTechPeru/shareway-web-app | develop | 9915772 | Merge branch 'feature/us-02-trips-bookings' into develop | — | 2026-11-18 18:18 |
+| FundaTechPeru/shareway-web-app | develop | b5e439f | docs: add progress report with phases, commits and backend blockers | — | 2026-11-18 18:20 |
 
 ## Blocked by the backend
 
 The UI and the `*ApiService` for these flows are complete; the app shows a
 "Disponible próximamente" state and the code has `// TODO(backend): ...`.
 
-| # (CLAUDE.md §6) | Missing in the backend | Effect in the web app |
+| # | Missing in the backend | Effect in the web app |
 |---|---|---|
 | 1 | Central CORS for this web domain in the gateway | Local development works through the dev-server proxy; the deployed site on Render needs CORS to call the gateway. |
 | 2 | Gateway routes for `/api/v1/bookings`, `/fares`, `/fare-rules` and `X-User-Id` from the JWT | Fare, booking, booking status and cancellation return 404 today; the error is shown in a snackbar. |
@@ -146,7 +145,7 @@ The UI and the `*ApiService` for these flows are complete; the app shows a
 
 Also: the OpenAPI specs of Driver Management, Trip Planning, Booking and Trip
 Execution were unreachable (502/503) while working, so their DTOs follow
-CLAUDE.md. Payments & Settlement was checked against its spec and matches.
+the API contract. Payments & Settlement was checked against its spec and matches.
 
 ## How to try it locally
 

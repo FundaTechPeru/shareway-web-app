@@ -12,8 +12,8 @@ import {
 
 /**
  * Backend ids for users. TODO(backend): Trip Planning still uses Long for
- * `passengerId` and `driverId` while users are UUIDs (CLAUDE.md section 6.3).
- * When the service switches to UUID taken from the token, only this file
+ * `passengerId` and `driverId` while users are UUIDs (backend blocker #3 in
+ * docs/PROGRESS.md). When the service switches to UUID taken from the token, only this file
  * changes: drop `LegacyUserId`, `toBackendUserId` and the `passengerId` field.
  */
 type LegacyUserId = number | string;
@@ -82,9 +82,9 @@ export class TripPlanningApiService {
   private readonly url = `${environment.apiBaseUrl}/trip-requests`;
 
   /**
-   * TODO(backend): GET /trip-requests is not filtered by user yet (CLAUDE.md
-   * section 6.5). Until then the list is filtered here, which only works once
-   * passenger ids are UUIDs.
+   * TODO(backend): GET /trip-requests is not filtered by user yet (backend
+   * blocker #5 in docs/PROGRESS.md). Until then the list is filtered here,
+   * which only works once passenger ids are UUIDs.
    */
   readonly canListByUser = false;
 

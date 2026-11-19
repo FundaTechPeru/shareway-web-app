@@ -12,7 +12,7 @@ import {
 /**
  * Booking & Pricing. TODO(backend): the gateway does not route
  * /api/v1/bookings|fares|fare-rules to the Booking service yet (404) and does
- * not inject X-User-Id from the JWT (CLAUDE.md section 6.2).
+ * not inject X-User-Id from the JWT (backend blocker #2 in docs/PROGRESS.md).
  */
 @Injectable({providedIn: 'root'})
 export class BookingApiService {

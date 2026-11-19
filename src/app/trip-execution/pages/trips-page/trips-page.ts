@@ -9,7 +9,8 @@ import {ComingSoonNotice} from '../../../shared/components/coming-soon-notice/co
 
 /**
  * Driver trips. TODO(backend): there is no "my trips" endpoint for drivers yet
- * (CLAUDE.md section 6.5), so the driver opens a trip by its code.
+ * (backend blocker #5 in docs/PROGRESS.md), so the driver opens a trip by
+ * its code.
  */
 @Component({
   selector: 'app-trips-page',

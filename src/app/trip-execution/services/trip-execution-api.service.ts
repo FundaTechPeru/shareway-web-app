@@ -116,8 +116,8 @@ function toBoardingResult(dto: ResultadoAbordajeDto): BoardingResult {
 /**
  * Adapter for the Trip Execution service, which speaks Spanish (the gateway
  * maps /api/v1/trips to /api/viajes). It exposes English models only.
- * TODO(backend): the service has no authentication yet (CLAUDE.md section
- * 6.6), so the driver id is sent in the body.
+ * TODO(backend): the service has no authentication yet (backend blocker
+ * #6 in docs/PROGRESS.md), so the driver id is sent in the body.
  */
 @Injectable({providedIn: 'root'})
 export class TripExecutionApiService {

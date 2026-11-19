@@ -43,8 +43,8 @@ export class NewBookingPage implements OnInit {
   readonly requestId = input<string>();
   /**
    * TODO(backend): no endpoint returns the `groupId` that fare and booking
-   * need (CLAUDE.md section 6.4). Until then this page shows the coming-soon
-   * state unless a groupId arrives as a query param.
+   * need (backend blocker #4 in docs/PROGRESS.md). Until then this page
+   * shows the coming-soon state unless a groupId arrives as a query param.
    */
   readonly groupId = input<string>();
 
