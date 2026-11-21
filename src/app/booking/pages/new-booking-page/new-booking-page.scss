@@ -1,27 +1,10 @@
-.page {
-  padding: var(--sw-page-padding);
-  max-width: 640px;
-  margin: 0 auto;
+.fare {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  > a[mat-button] {
-    align-self: flex-start;
-  }
-}
-
-h1 {
-  font: var(--mat-sys-headline-small);
-  margin: 0;
+  align-items: center;
+  gap: 16px;
 }
 
 .amount {
-  font: var(--mat-sys-display-small);
-  color: var(--mat-sys-primary);
-  margin: 8px 0;
-}
-
-.muted {
-  color: var(--mat-sys-on-surface-variant);
+  font: 700 32px/40px Roboto, sans-serif;
+  color: var(--sw-color-primary-dark);
 }

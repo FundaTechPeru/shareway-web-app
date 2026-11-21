@@ -9,7 +9,6 @@ import {
   signal,
 } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {Router, RouterLink} from '@angular/router';
@@ -17,6 +16,8 @@ import {NotificationService} from '../../../core/notifications/notification.serv
 import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
 import {FareEstimate} from '../../model/booking.model';
 import {BookingApiService} from '../../services/booking-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Fare estimate (US-03) and reservation (US-04) for a trip request. */
 @Component({
@@ -25,10 +26,11 @@ import {BookingApiService} from '../../services/booking-api.service';
     CurrencyPipe,
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatIconModule,
     MatProgressBarModule,
     NoticeBanner,
+    Card,
+    ButtonVariantDirective,
   ],
   templateUrl: './new-booking-page.html',
   styleUrl: './new-booking-page.scss',
