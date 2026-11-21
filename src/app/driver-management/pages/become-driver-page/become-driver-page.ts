@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -11,6 +10,8 @@ import {AuthService} from '../../../core/auth/auth.service';
 import {NotificationService} from '../../../core/notifications/notification.service';
 import {PHONE_PATTERN} from '../../../shared/validation/patterns';
 import {DriverProfileApiService} from '../../services/driver-profile-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** 8 to 12 uppercase letters or digits. */
 export const LICENSE_PATTERN = /^[A-Z0-9]{8,12}$/;
@@ -27,11 +28,12 @@ type Step = 'profile' | 'relogin';
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
-    MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    Card,
+    ButtonVariantDirective,
   ],
   templateUrl: './become-driver-page.html',
   styleUrl: './become-driver-page.scss',
