@@ -42,9 +42,3 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
-
-# Local assistant files (not versioned)
-CLAUDE.md
-.claude/
-
-mockups/
