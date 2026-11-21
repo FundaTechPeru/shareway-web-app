@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -28,6 +27,10 @@ import {
   Trip,
 } from '../../model/trip.model';
 import {TripExecutionApiService} from '../../services/trip-execution-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Boarding PIN: 4 to 6 digits. */
 export const PIN_PATTERN = /^\d{4,6}$/;
@@ -40,12 +43,15 @@ export const PIN_PATTERN = /^\d{4,6}$/;
     ReactiveFormsModule,
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
     StatusChip,
+    Card,
+    EmptyState,
+    NoticeBanner,
+    ButtonVariantDirective,
   ],
   templateUrl: './trip-page.html',
   styleUrl: './trip-page.scss',
