@@ -7,7 +7,6 @@ import {
   Validators,
 } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -24,6 +23,10 @@ import {
   simulatedCardToken,
 } from '../../model/payment.model';
 import {PaymentMethodsApiService} from '../../services/payment-methods-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** The card must not be expired at the end of its expiration month. */
 export function notExpiredValidator(
@@ -48,13 +51,16 @@ export function notExpiredValidator(
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
-    MatCardModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
     MatSelectModule,
+    Card,
+    EmptyState,
+    NoticeBanner,
+    ButtonVariantDirective,
   ],
   templateUrl: './payment-methods-page.html',
   styleUrl: './payment-methods-page.scss',
