@@ -1,48 +1,75 @@
-<section class="page">
-  <header class="header">
-    <h1>Mis solicitudes de viaje</h1>
-    <a mat-flat-button routerLink="/passenger/trip-requests/new">
-      <mat-icon>add_road</mat-icon>
+<section class="sw-page sw-page--narrow">
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">Mis solicitudes de viaje</h1>
+      <p class="sw-page-subtitle">Revisa tus solicitudes y las propuestas de los conductores.</p>
+    </div>
+    <a mat-flat-button appButton routerLink="/passenger/trip-requests/new">
+      <mat-icon>add</mat-icon>
       Programar viaje
     </a>
   </header>
 
   @if (!canListByUser) {
     <!-- TODO(backend): GET /trip-requests must filter by the logged-in passenger (UUID). -->
-    <app-notice-banner tone="info" icon="schedule" heading="Disponible próximamente">El listado de tus solicitudes depende de una actualización del servicio de viajes. Mientras tanto, puedes ver cada solicitud justo después de crearla.</app-notice-banner>
+    <app-notice-banner tone="info" icon="schedule" heading="Disponible próximamente">
+      El listado de tus solicitudes depende de una actualización del servicio de viajes. Mientras
+      tanto, puedes ver cada solicitud justo después de crearla.
+    </app-notice-banner>
   }
 
   @if (loading()) {
     <mat-progress-bar mode="indeterminate" />
   } @else if (loadFailed()) {
-    <div class="empty">
-      <p>No se pudieron cargar tus solicitudes.</p>
-      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
-    </div>
+    <app-card>
+      <app-empty-state
+        tone="error"
+        icon="wifi_off"
+        heading="No se pudieron cargar tus solicitudes."
+        message="Revisa tu conexión y vuelve a intentarlo."
+      >
+        <button mat-flat-button appButton emptyActions type="button" (click)="load()">
+          Reintentar
+        </button>
+      </app-empty-state>
+    </app-card>
   } @else if (requests().length === 0) {
-    <div class="empty">
-      <mat-icon aria-hidden="true">route</mat-icon>
-      <p>No tienes solicitudes de viaje.</p>
-    </div>
+    <app-card>
+      <app-empty-state
+        icon="route"
+        heading="No tienes solicitudes de viaje."
+        message="Programa un viaje y te mostraremos conductores para compartirlo."
+      />
+    </app-card>
   } @else {
-    <mat-nav-list>
-      @for (request of requests(); track request.id) {
-        <a mat-list-item [routerLink]="request.id" [attr.data-id]="request.id">
-          <span matListItemTitle>
-            {{ request.originLabel }} → {{ request.destinationLabel }}
-          </span>
-          <span matListItemLine>
-            {{ request.travelDate | date: 'fullDate' }} · {{ request.earliestDeparture }}–{{
-              request.latestDeparture
-            }}
-          </span>
-          <app-status-chip
-            matListItemMeta
-            [label]="labels[request.status]"
-            [tone]="tones[request.status]"
-          />
-        </a>
-      }
-    </mat-nav-list>
+    <app-card class="sw-card--list">
+      <ul class="sw-list">
+        @for (request of requests(); track request.id) {
+          <li>
+            <a class="sw-list-item" [routerLink]="request.id" [attr.data-id]="request.id">
+              <span class="date" aria-hidden="true">
+                <span class="day">{{ request.travelDate | date: 'EEE' }}</span>
+                <span class="number">{{ request.travelDate | date: 'd' }}</span>
+                <span class="month">{{ request.travelDate | date: 'MMM' }}</span>
+              </span>
+              <span class="sw-list-item__body">
+                <span class="sw-list-item__title">
+                  {{ request.originLabel }} → {{ request.destinationLabel }}
+                </span>
+                <span class="sw-list-item__support">
+                  {{ request.travelDate | date: 'fullDate' }} · {{ request.earliestDeparture }}–{{
+                    request.latestDeparture
+                  }}
+                </span>
+                <span class="chip">
+                  <app-status-chip [label]="labels[request.status]" [tone]="tones[request.status]" />
+                </span>
+              </span>
+              <mat-icon class="sw-list-item__chevron" aria-hidden="true">chevron_right</mat-icon>
+            </a>
+          </li>
+        }
+      </ul>
+    </app-card>
   }
 </section>
