@@ -1,9 +1,29 @@
 // ShareWay global styles and Angular Material (M3) theme.
-// Palettes are generated in `styles/_theme-colors.scss` from the brand colors:
-//   primary #0F766E (teal) · tertiary #F59E0B (amber) · neutral #5F6368.
-// Learn more at https://material.angular.dev/guide/theming
+// Every value comes from the style guide tokens in `styles/_tokens.scss`.
+// Palettes in `styles/_theme-colors.scss` are generated from the guide colors;
+// the exact guide colors are then pinned with `theme-overrides`.
+@use 'sass:list';
 @use '@angular/material' as mat;
 @use './styles/theme-colors' as shareway;
+@use './styles/tokens' as sw;
+@use './styles/base';
+@use './styles/buttons';
+@use './styles/forms';
+@use './styles/page';
+
+// Material typescale mapped to the guide scale.
+$_typescale: (
+  headline-small: (28px, 36px, sw.$weight-bold),
+  title-large: (19px, 26px, sw.$weight-medium),
+  title-medium: (16px, 22px, sw.$weight-medium),
+  title-small: (15px, 20px, sw.$weight-medium),
+  body-large: (15px, 22px, sw.$weight-regular),
+  body-medium: (15px, 22px, sw.$weight-regular),
+  body-small: (13px, 18px, sw.$weight-regular),
+  label-large: (15px, 20px, sw.$weight-medium),
+  label-medium: (12px, 16px, sw.$weight-medium),
+  label-small: (12px, 16px, sw.$weight-medium),
+);
 
 html {
   height: 100%;
@@ -13,29 +33,133 @@ html {
         primary: shareway.$primary-palette,
         tertiary: shareway.$tertiary-palette,
       ),
-      typography: Roboto,
+      typography: (
+        plain-family: Roboto,
+        brand-family: Roboto,
+        regular-weight: sw.$weight-regular,
+        medium-weight: sw.$weight-medium,
+        bold-weight: sw.$weight-bold,
+      ),
       density: 0,
+    )
+  );
+
+  // Exact guide colors.
+  @include mat.theme-overrides(
+    (
+      primary: sw.$primary,
+      on-primary: #ffffff,
+      primary-container: sw.$primary-soft,
+      on-primary-container: sw.$primary-dark,
+      tertiary: sw.$accent,
+      on-tertiary: sw.$on-accent,
+      tertiary-container: sw.$accent-soft,
+      on-tertiary-container: sw.$on-accent,
+      error: sw.$error,
+      on-error: #ffffff,
+      error-container: sw.$error-soft,
+      on-error-container: sw.$error,
+      background: sw.$background,
+      on-background: sw.$ink,
+      surface: sw.$surface,
+      on-surface: sw.$ink,
+      on-surface-variant: sw.$ink-2,
+      surface-container-lowest: sw.$surface,
+      surface-container-low: sw.$surface,
+      surface-container: sw.$surface,
+      surface-container-high: sw.$surface-2,
+      surface-container-highest: sw.$surface-2,
+      outline: sw.$border-strong,
+      outline-variant: sw.$border,
+      inverse-surface: sw.$ink,
+    )
+  );
+
+  @each $name, $entry in $_typescale {
+    $size: list.nth($entry, 1);
+    $line: list.nth($entry, 2);
+    $weight: list.nth($entry, 3);
+    --mat-sys-#{$name}: #{$weight} #{$size}/#{$line} #{sw.$font-family};
+    --mat-sys-#{$name}-size: #{$size};
+    --mat-sys-#{$name}-line-height: #{$line};
+    --mat-sys-#{$name}-weight: #{$weight};
+    --mat-sys-#{$name}-tracking: 0;
+  }
+
+  // Components: buttons 48 px, radius 12-18 px, fields 52 px.
+  @include mat.button-overrides(
+    (
+      filled-container-height: sw.$button-height,
+      outlined-container-height: sw.$button-height,
+      text-container-height: sw.$button-height,
+      tonal-container-height: sw.$button-height,
+      protected-container-height: sw.$button-height,
+      filled-container-shape: sw.$radius-pill,
+      outlined-container-shape: sw.$radius-pill,
+      text-container-shape: sw.$radius-pill,
+      tonal-container-shape: sw.$radius-pill,
+      protected-container-shape: sw.$radius-pill,
+      filled-horizontal-padding: sw.$space-6,
+      outlined-horizontal-padding: sw.$space-6,
+      text-horizontal-padding: sw.$space-4,
+      outlined-outline-color: sw.$border-strong,
+      filled-label-text-size: 16px,
+      outlined-label-text-size: 16px,
+      text-label-text-size: 16px,
+    )
+  );
+  @include mat.card-overrides(
+    (
+      outlined-container-shape: sw.$radius-md,
+      outlined-container-color: sw.$surface,
+      outlined-outline-color: sw.$border,
+      elevated-container-shape: sw.$radius-md,
+    )
+  );
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: sw.$radius-sm,
+      outlined-outline-color: sw.$border-strong,
+      outlined-hover-outline-color: sw.$ink-3,
+      outlined-focus-outline-width: 2px,
+      outlined-error-outline-color: sw.$error,
+      outlined-error-hover-outline-color: sw.$error,
+    )
+  );
+  @include mat.form-field-density(-1);
+  @include mat.snack-bar-overrides(
+    (
+      container-color: sw.$ink,
+      container-shape: sw.$radius-sm,
+      button-color: sw.$primary-soft,
+    )
+  );
+  @include mat.list-overrides(
+    (
+      active-indicator-shape: sw.$radius-sm,
+    )
+  );
+  @include mat.sidenav-overrides(
+    (
+      container-shape: 0,
+      container-width: sw.$sidebar-width,
+      content-background-color: sw.$background,
     )
   );
 }
 
-body {
-  color-scheme: light;
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-  margin: 0;
-  height: 100%;
-}
-
-// Brand tokens shared by custom components.
 :root {
-  --sw-content-max-width: 1200px;
-  --sw-page-padding: 16px;
+  @include sw.custom-properties;
 }
 
 @media (min-width: 600px) {
   :root {
-    --sw-page-padding: 24px;
+    --sw-page-padding: #{sw.$space-6};
+  }
+}
+
+@media (min-width: sw.$desktop-breakpoint) {
+  :root {
+    --sw-page-padding: #{sw.$space-8};
   }
 }
