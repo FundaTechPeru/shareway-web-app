@@ -9,7 +9,6 @@ import {
   signal,
 } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {NotificationService} from '../../../core/notifications/notification.service';
@@ -23,6 +22,10 @@ import {
   isCancellable,
 } from '../../model/booking.model';
 import {BookingApiService} from '../../services/booking-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Happy path of a booking, used for the progress steps. */
 export const BOOKING_STEPS: readonly BookingStatus[] = [
@@ -40,10 +43,13 @@ export const BOOKING_STEPS: readonly BookingStatus[] = [
   imports: [
     CurrencyPipe,
     MatButtonModule,
-    MatCardModule,
     MatIconModule,
     MatProgressBarModule,
     StatusChip,
+    Card,
+    EmptyState,
+    NoticeBanner,
+    ButtonVariantDirective,
   ],
   templateUrl: './booking-page.html',
   styleUrl: './booking-page.scss',
