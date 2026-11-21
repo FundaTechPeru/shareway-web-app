@@ -1,7 +1,8 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 interface QuickLink {
   title: string;
@@ -13,7 +14,7 @@ interface QuickLink {
 /** Passenger landing after login: quick access to the main flows. */
 @Component({
   selector: 'app-passenger-home-page',
-  imports: [MatCardModule, MatIconModule, RouterLink],
+  imports: [MatIconModule, RouterLink, MatButtonModule, ButtonVariantDirective],
   templateUrl: './passenger-home-page.html',
   styleUrl: './passenger-home-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,7 +24,7 @@ export class PassengerHomePage {
     {
       title: 'Programar un viaje',
       description: 'Indica origen, destino y horario para encontrar conductor.',
-      icon: 'add_road',
+      icon: 'search',
       link: '/passenger/trip-requests/new',
     },
     {
@@ -41,7 +42,7 @@ export class PassengerHomePage {
     {
       title: 'Mis pagos',
       description: 'Consulta el historial de tus pagos.',
-      icon: 'receipt_long',
+      icon: 'payments',
       link: '/passenger/payments',
     },
     {

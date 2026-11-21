@@ -1,18 +1,38 @@
-<section class="page">
-  <h1>¿A dónde vamos hoy?</h1>
-  <p class="lead">Programa tus viajes compartidos con conductores verificados.</p>
+<section class="sw-page">
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">¿A dónde vamos hoy?</h1>
+      <p class="sw-page-subtitle">Programa tus viajes compartidos con conductores verificados.</p>
+    </div>
+  </header>
 
-  <div class="grid">
-    @for (item of links; track item.link) {
-      <a [routerLink]="item.link" class="link-card">
-        <mat-card appearance="outlined">
-          <mat-card-header>
-            <mat-icon matCardAvatar aria-hidden="true">{{ item.icon }}</mat-icon>
-            <mat-card-title>{{ item.title }}</mat-card-title>
-            <mat-card-subtitle>{{ item.description }}</mat-card-subtitle>
-          </mat-card-header>
-        </mat-card>
-      </a>
-    }
+  <div class="hero">
+    <span class="hero-icon" aria-hidden="true"><mat-icon>route</mat-icon></span>
+    <div class="hero-text">
+      <h2>Programa tu próximo viaje</h2>
+      <p>Elige origen, destino y horario. Te mostraremos conductores para compartir el viaje.</p>
+    </div>
+    <a mat-flat-button appButton="soft" routerLink="/passenger/trip-requests/new">
+      <mat-icon>search</mat-icon>
+      Buscar viaje
+    </a>
   </div>
+
+  <section class="sw-section" aria-labelledby="shortcuts-title">
+    <h2 id="shortcuts-title" class="sw-section-title">Accesos rápidos</h2>
+    <div class="grid">
+      @for (item of links; track item.link) {
+        <a [routerLink]="item.link" class="link-card">
+          <span class="sw-icon-bubble sw-icon-bubble--primary" aria-hidden="true">
+            <mat-icon>{{ item.icon }}</mat-icon>
+          </span>
+          <span class="sw-list-item__body">
+            <span class="sw-list-item__title">{{ item.title }}</span>
+            <span class="sw-list-item__support">{{ item.description }}</span>
+          </span>
+          <mat-icon class="sw-list-item__chevron" aria-hidden="true">chevron_right</mat-icon>
+        </a>
+      }
+    </div>
+  </section>
 </section>
