@@ -222,3 +222,16 @@ app-card > .mat-mdc-progress-bar {
   right: 0;
   left: 0;
 }
+
+// "Back" link at the top of detail pages. Phones already have the back arrow
+// in the top bar, so it only shows on desktop.
+.sw-back-link {
+  align-self: flex-start;
+  margin-left: -8px;
+}
+
+@media (max-width: #{sw.$desktop-breakpoint - 0.02px}) {
+  .sw-back-link {
+    display: none !important;
+  }
+}
