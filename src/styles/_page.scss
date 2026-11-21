@@ -122,6 +122,23 @@
   }
 }
 
+// Rows wrapped in <li> (links inside a list).
+.sw-list > li + li {
+  border-top: 1px solid sw.$border;
+}
+
+// Text kept for screen readers but hidden on phones (icon-only buttons).
+@media (max-width: 599.98px) {
+  .sw-label-desktop {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
 a.sw-list-item {
   border-radius: sw.$radius-sm;
 
