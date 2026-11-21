@@ -11,6 +11,9 @@ import {
   PaymentResponse,
 } from '../../model/payment.model';
 import {PaymentsApiService} from '../../services/payments-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Most relevant date of a payment, used to sort the history. */
 export function paymentDate(payment: PaymentResponse): string {
@@ -28,6 +31,9 @@ export function paymentDate(payment: PaymentResponse): string {
     MatIconModule,
     MatProgressBarModule,
     StatusChip,
+    Card,
+    EmptyState,
+    ButtonVariantDirective,
   ],
   templateUrl: './payments-page.html',
   styleUrl: './payments-page.scss',
