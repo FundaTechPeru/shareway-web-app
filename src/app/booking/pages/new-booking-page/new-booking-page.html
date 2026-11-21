@@ -10,9 +10,7 @@
 
   @if (!ready()) {
     <!-- TODO(backend): an endpoint must return the groupId for this request. -->
-    <app-coming-soon-notice
-      message="La tarifa y la reserva necesitan el grupo de viaje asignado por el servicio de reservas, que aún no está disponible desde la web."
-    />
+    <app-notice-banner tone="info" icon="schedule" heading="Disponible próximamente">La tarifa y la reserva necesitan el grupo de viaje asignado por el servicio de reservas, que aún no está disponible desde la web.</app-notice-banner>
   }
 
   <mat-card appearance="outlined">

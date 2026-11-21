@@ -9,9 +9,7 @@
 
   @if (!canListByUser) {
     <!-- TODO(backend): GET /trip-requests must filter by the logged-in passenger (UUID). -->
-    <app-coming-soon-notice
-      message="El listado de tus solicitudes depende de una actualización del servicio de viajes. Mientras tanto, puedes ver cada solicitud justo después de crearla."
-    />
+    <app-notice-banner tone="info" icon="schedule" heading="Disponible próximamente">El listado de tus solicitudes depende de una actualización del servicio de viajes. Mientras tanto, puedes ver cada solicitud justo después de crearla.</app-notice-banner>
   }
 
   @if (loading()) {

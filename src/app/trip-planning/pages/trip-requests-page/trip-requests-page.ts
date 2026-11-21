@@ -6,7 +6,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
 import {AuthService} from '../../../core/auth/auth.service';
-import {ComingSoonNotice} from '../../../shared/components/coming-soon-notice/coming-soon-notice';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
 import {StatusChip} from '../../../shared/components/status-chip/status-chip';
 import {
   TRIP_REQUEST_STATUS_LABELS,
@@ -25,7 +25,7 @@ import {TripPlanningApiService} from '../../services/trip-planning-api.service';
     MatIconModule,
     MatListModule,
     MatProgressBarModule,
-    ComingSoonNotice,
+    NoticeBanner,
     StatusChip,
   ],
   templateUrl: './trip-requests-page.html',

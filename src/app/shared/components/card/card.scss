@@ -1,0 +1,46 @@
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid var(--sw-color-border);
+  border-radius: var(--sw-radius-md);
+  background: var(--sw-color-surface);
+  color: var(--sw-color-ink);
+}
+
+:host(.sw-card--list) {
+  gap: 0;
+  padding: 4px 20px;
+
+  .header {
+    padding: 16px 0 4px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.heading {
+  margin: 0;
+  font: var(--sw-font-section-title);
+}
+
+.subheading {
+  margin: 0;
+  font: var(--sw-font-body);
+  color: var(--sw-color-ink-3);
+}

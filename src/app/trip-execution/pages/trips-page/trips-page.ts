@@ -5,7 +5,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {Router} from '@angular/router';
-import {ComingSoonNotice} from '../../../shared/components/coming-soon-notice/coming-soon-notice';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
 
 /**
  * Driver trips. TODO(backend): there is no "my trips" endpoint for drivers yet
@@ -20,14 +20,15 @@ import {ComingSoonNotice} from '../../../shared/components/coming-soon-notice/co
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    ComingSoonNotice,
+    NoticeBanner,
   ],
   template: `
     <section class="page">
       <h1>Mis viajes</h1>
-      <app-coming-soon-notice
-        message="La lista de tus viajes asignados estará disponible cuando el servicio de viajes la publique. Mientras tanto, abre un viaje con su código."
-      />
+      <app-notice-banner tone="info" icon="schedule" heading="Disponible próximamente"
+        >La lista de tus viajes asignados estará disponible cuando el servicio de viajes la
+        publique. Mientras tanto, abre un viaje con su código.</app-notice-banner
+      >
       <mat-card appearance="outlined">
         <mat-card-content>
           <form class="open-form" (ngSubmit)="open()" novalidate>

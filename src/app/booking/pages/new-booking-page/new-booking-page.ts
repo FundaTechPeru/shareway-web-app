@@ -14,7 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {Router, RouterLink} from '@angular/router';
 import {NotificationService} from '../../../core/notifications/notification.service';
-import {ComingSoonNotice} from '../../../shared/components/coming-soon-notice/coming-soon-notice';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
 import {FareEstimate} from '../../model/booking.model';
 import {BookingApiService} from '../../services/booking-api.service';
 
@@ -28,7 +28,7 @@ import {BookingApiService} from '../../services/booking-api.service';
     MatCardModule,
     MatIconModule,
     MatProgressBarModule,
-    ComingSoonNotice,
+    NoticeBanner,
   ],
   templateUrl: './new-booking-page.html',
   styleUrl: './new-booking-page.scss',
