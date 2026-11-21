@@ -1,7 +1,6 @@
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {ChangeDetectionStrategy, Component, OnInit, inject, input, signal} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
@@ -12,6 +11,9 @@ import {
   SettlementResponse,
 } from '../../model/settlement.model';
 import {SettlementsApiService} from '../../services/settlements-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Detail of one settlement: gross, commission and net amounts (US-26). */
 @Component({
@@ -21,10 +23,12 @@ import {SettlementsApiService} from '../../services/settlements-api.service';
     DatePipe,
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatIconModule,
     MatProgressBarModule,
     StatusChip,
+    Card,
+    EmptyState,
+    ButtonVariantDirective,
   ],
   templateUrl: './settlement-detail-page.html',
   styleUrl: './settlement-detail-page.scss',

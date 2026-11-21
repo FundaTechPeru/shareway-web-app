@@ -1,25 +1,14 @@
-.page {
-  padding: var(--sw-page-padding);
-  max-width: 640px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-
-  mat-card {
-    width: 100%;
-  }
-}
-
-dl {
+.amounts {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 6px 16px;
-  margin: 16px 0 0;
+  gap: 8px 16px;
+  margin: 0;
+  padding: 16px;
+  border-radius: var(--sw-radius-sm);
+  background: var(--sw-color-background);
 
   dt {
-    color: var(--mat-sys-on-surface-variant);
+    color: var(--sw-color-ink-2);
   }
 
   dd {
@@ -29,17 +18,8 @@ dl {
 }
 
 .net {
-  font: var(--mat-sys-title-medium);
-  color: var(--mat-sys-primary);
-  border-top: 1px solid var(--mat-sys-outline-variant);
-  padding-top: 6px;
-}
-
-.mono {
-  font-family: monospace;
-  word-break: break-all;
-}
-
-.empty {
-  color: var(--mat-sys-on-surface-variant);
+  padding-top: 8px;
+  border-top: 1px solid var(--sw-color-border);
+  font: var(--sw-font-highlight);
+  color: var(--sw-color-primary-dark);
 }

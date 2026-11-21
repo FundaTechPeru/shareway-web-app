@@ -1,7 +1,6 @@
 import {DatePipe} from '@angular/common';
 import {ChangeDetectionStrategy, Component, OnInit, computed, inject, signal} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {NotificationService} from '../../../core/notifications/notification.service';
@@ -16,6 +15,10 @@ import {
   latestByType,
 } from '../../model/document.model';
 import {DriverDocumentsApiService} from '../../services/driver-documents-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Client-side guard; the backend has the final word on size and type. */
 export const MAX_FILE_BYTES = 10 * 1024 * 1024;
@@ -39,10 +42,13 @@ interface DocumentSlot {
   imports: [
     DatePipe,
     MatButtonModule,
-    MatCardModule,
     MatIconModule,
     MatProgressBarModule,
     StatusChip,
+    Card,
+    EmptyState,
+    NoticeBanner,
+    ButtonVariantDirective,
   ],
   templateUrl: './documents-page.html',
   styleUrl: './documents-page.scss',

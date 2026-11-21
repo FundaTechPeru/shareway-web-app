@@ -1,69 +1,167 @@
-// Shared layout for the public login and register pages.
+// Shared layout for the public login and register pages (based on ADM-01):
+// brand panel in primary dark on desktop, form card on the background.
 .auth-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   min-height: 100dvh;
+  background: var(--sw-color-background);
+}
+
+@media (min-width: 960px) {
+  .auth-page {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
+
+.brand-panel {
+  display: none;
+  flex-direction: column;
+  gap: 48px;
+  padding: 56px 64px;
+  background: var(--sw-color-primary-dark);
+  color: #ffffff;
+
+  @media (min-width: 960px) {
+    display: flex;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-name {
+  display: block;
+  font: 700 28px/34px Roboto, sans-serif;
+}
+
+.brand-tagline {
+  display: block;
+  font: var(--sw-font-body);
+  color: rgb(255 255 255 / 72%);
+}
+
+.claim {
+  margin-top: auto;
+  font: 700 36px/46px Roboto, sans-serif;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 0 auto;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font: 400 17px/24px Roboto, sans-serif;
+  }
+}
+
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 10%);
+}
+
+.form-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding: var(--sw-page-padding);
-  box-sizing: border-box;
-  background: linear-gradient(
-    180deg,
-    var(--mat-sys-primary-container) 0%,
-    var(--mat-sys-surface) 60%
-  );
+  padding: 32px var(--sw-page-padding);
 }
 
-.hero {
-  text-align: center;
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+  font: 700 22px/28px Roboto, sans-serif;
+  color: var(--sw-color-primary-dark);
 
-  h1 {
-    margin: 0;
-    font: var(--mat-sys-display-small);
-    color: var(--mat-sys-primary);
-  }
-
-  p {
-    margin: 8px 0 0;
-    font: var(--mat-sys-body-large);
-    color: var(--mat-sys-on-surface-variant);
+  @media (min-width: 960px) {
+    display: none;
   }
 }
 
 .auth-card {
-  width: 100%;
-  max-width: 440px;
-}
-
-form {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-top: 16px;
+  gap: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 40px 32px;
+  overflow: hidden;
+  border: 1px solid var(--sw-color-border);
+  border-radius: var(--sw-radius-lg);
+  background: var(--sw-color-surface);
 
-  button[type='submit'] {
-    margin-top: 8px;
+  @media (max-width: 599.98px) {
+    padding: 28px 20px;
+  }
+
+  > mat-progress-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
   }
 }
 
-mat-card-actions {
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.notice {
+.card-header {
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  margin-top: 16px;
-  padding: 12px;
-  border-radius: var(--mat-sys-corner-medium);
-  background: var(--mat-sys-tertiary-container);
-  color: var(--mat-sys-on-tertiary-container);
+  flex-direction: column;
+  gap: 8px;
+
+  h1 {
+    font: var(--sw-font-screen-title);
+  }
 
   p {
-    margin: 0;
+    color: var(--sw-color-ink-2);
   }
+}
+
+.switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--sw-color-ink-2);
+}
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font: var(--sw-font-support);
+  color: var(--sw-color-ink-3);
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}
+
+.footer {
+  font: var(--sw-font-support);
+  color: var(--sw-color-ink-3);
 }

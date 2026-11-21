@@ -1,3 +1,4 @@
+// Layout from ADM-02 (desktop) and the mobile mockups (top bar + back arrow).
 :host {
   display: block;
   height: 100dvh;
@@ -5,43 +6,155 @@
 
 .container {
   height: 100%;
+  background: var(--sw-color-background);
 }
 
-.sidenav {
-  width: 260px;
+.sidebar {
+  width: var(--sw-sidebar-width);
+  border: 0;
+  background: var(--sw-color-primary-dark);
+  color: #ffffff;
 }
 
-.sidenav-header {
-  font: var(--mat-sys-title-medium);
-}
-
-.toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  gap: 8px;
-  background-color: var(--mat-sys-primary);
-  color: var(--mat-sys-on-primary);
-
-  button {
-    color: inherit;
-  }
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 24px 16px 16px;
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 32px;
   color: inherit;
   text-decoration: none;
-  font: var(--mat-sys-title-large);
 }
 
-.spacer {
+.brand-text,
+.user-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.brand-name {
+  font: 700 20px/24px Roboto, sans-serif;
+}
+
+.brand-role,
+.user-role {
+  font: var(--sw-font-support);
+  color: rgb(255 255 255 / 72%);
+}
+
+.nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: var(--sw-radius-sm);
+  color: rgb(255 255 255 / 84%);
+  font: 400 16px/22px Roboto, sans-serif;
+  text-decoration: none;
+
+  &:hover {
+    background: rgb(255 255 255 / 8%);
+    color: #ffffff;
+  }
+
+  &.active {
+    background: rgb(255 255 255 / 14%);
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  &:focus-visible {
+    outline-color: var(--sw-color-accent);
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 16px 4px 0;
+  border-top: 1px solid rgb(255 255 255 / 16%);
+}
+
+.avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--sw-color-accent-soft);
+  color: var(--sw-color-on-accent);
+  font: 700 15px/1 Roboto, sans-serif;
+}
+
+.user-text {
   flex: 1;
 }
 
 .user-name {
-  font: var(--mat-sys-label-large);
   overflow: hidden;
+  font: 500 15px/20px Roboto, sans-serif;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 40vw;
+}
+
+.logout {
+  flex-shrink: 0;
+  color: rgb(255 255 255 / 84%);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  height: 64px;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--sw-color-border);
+  background: var(--sw-color-surface);
+
+  &.mobile {
+    height: 56px;
+    padding: 0 4px;
+  }
+}
+
+.topbar-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font: 500 17px/24px Roboto, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar.mobile .topbar-title {
+  font: 500 20px/28px Roboto, sans-serif;
+  padding-left: 4px;
 }

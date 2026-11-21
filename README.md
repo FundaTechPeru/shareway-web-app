@@ -56,7 +56,7 @@ All backend calls go through the **API Gateway**; microservices are never called
 src/
   app/
     core/                # singletons: auth, HTTP interceptors, guards, layout (shell)
-    shared/              # reusable UI components, pipes and common models
+    shared/              # style guide components (card, chip, banner, button, empty state)
     iam/                 # login and registration (/login, /register)
     driver-management/   # driver profile, documents, vehicles, availability
     trip-planning/       # trip requests and match proposals
@@ -65,7 +65,7 @@ src/
     trip-execution/      # trip view, boarding validation, start/finish
     app.routes.ts        # top-level routes (lazy-loads each bounded context)
   environments/          # apiBaseUrl per environment
-  styles/                # generated Material palettes for the ShareWay theme
+  styles/                # style guide tokens, Material palettes and global helpers
   styles.scss            # global styles and Material theme
 ```
 

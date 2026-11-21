@@ -1,9 +1,7 @@
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {ChangeDetectionStrategy, Component, OnInit, inject, signal} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
 import {catchError, forkJoin, of} from 'rxjs';
@@ -15,6 +13,9 @@ import {
   SettlementResponse,
 } from '../../model/settlement.model';
 import {SettlementsApiService} from '../../services/settlements-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Driver earnings: summary and settlements list (US-25, US-26). */
 @Component({
@@ -24,11 +25,12 @@ import {SettlementsApiService} from '../../services/settlements-api.service';
     DatePipe,
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatIconModule,
-    MatListModule,
     MatProgressBarModule,
     StatusChip,
+    Card,
+    EmptyState,
+    ButtonVariantDirective,
   ],
   templateUrl: './earnings-page.html',
   styleUrl: './earnings-page.scss',

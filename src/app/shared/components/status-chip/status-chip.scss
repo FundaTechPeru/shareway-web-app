@@ -1,36 +1,47 @@
 :host {
   display: inline-flex;
+  vertical-align: middle;
 }
 
 .chip {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 999px;
-  font: var(--mat-sys-label-medium);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 4px 12px;
+  border-radius: var(--sw-radius-pill);
+  font: 500 13px/18px Roboto, sans-serif;
   white-space: nowrap;
 }
 
+mat-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: -2px;
+  font-size: 16px;
+}
+
 .tone-success {
-  background: #d7f5e3;
-  color: #0b5a2f;
+  background: var(--sw-color-success-soft);
+  color: var(--sw-color-success);
 }
 
 .tone-warning {
-  background: var(--mat-sys-tertiary-container);
-  color: var(--mat-sys-on-tertiary-container);
+  background: var(--sw-color-accent-soft);
+  color: var(--sw-color-warning);
 }
 
 .tone-error {
-  background: var(--mat-sys-error-container);
-  color: var(--mat-sys-on-error-container);
+  background: var(--sw-color-error-soft);
+  color: var(--sw-color-error);
 }
 
 .tone-info {
-  background: var(--mat-sys-primary-container);
-  color: var(--mat-sys-on-primary-container);
+  background: var(--sw-color-primary-soft);
+  color: var(--sw-color-primary-dark);
 }
 
 .tone-neutral {
-  background: var(--mat-sys-surface-container-high);
-  color: var(--mat-sys-on-surface-variant);
+  background: var(--sw-color-surface-2);
+  color: var(--sw-color-ink-2);
 }

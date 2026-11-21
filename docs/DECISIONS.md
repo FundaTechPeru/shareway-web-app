@@ -128,3 +128,63 @@ did not settle a question. Each entry says what was decided and why.
   `driverId` is not the logged-in driver (client-side check only).
 - **Placeholder removed.** The phase 0 `ComingSoonPage` was deleted once every
   route had its page.
+
+## Phase 5 — UI style guide (`feature/ui-style-guide`)
+
+Only the look changed: logic, services and routes stay the same.
+
+- **Exact guide colors.** The Material palettes are generated from the guide
+  colors (`ng generate @angular/material:theme-color`) and the exact values
+  (primary `#0F5F73`, soft `#D9EEF2`, accent `#F2A31B`, error `#C2362B`, ink
+  and border greys) are pinned with `mat.theme-overrides`. Material
+  "surface" is white (*Superficie*) and the page background is `#F4F7F8`
+  (*Fondo*), so cards stand out as in the mockups.
+- **Tokens.** `src/styles/_tokens.scss` holds the SCSS variables and emits
+  them as `--sw-*` custom properties; components use the custom properties.
+- **Pill buttons.** The guide asks for 12-18 px radii, but every button in the
+  mockups is fully rounded, so buttons are pills (48 px; 52 px when full
+  width) and the 12-18 px radii are used for fields (12), cards (16) and the
+  auth card (18).
+- **Labels above the fields.** Material's outlined field puts the label inside
+  the border, so forms use a plain `<label>` above each `mat-form-field`
+  (`.sw-field`) and no `mat-label`. Selects are linked with
+  `aria-labelledby`.
+- **Icons.** `mat-icon` keeps its default font set class and that class is
+  mapped in CSS to *Material Symbols Rounded* (weight 400, no fill), which
+  gives a 2 px stroke with rounded ends on a 24 px grid. Registering the font
+  set through DI pulled Material code into the initial bundle (+120 kB), so
+  it is done in CSS.
+- **Shared components.** `app-status-chip` (success shows a check, as in the
+  guide), `app-notice-banner` (amber, red, info and grey),
+  `app-card`, `app-empty-state` (EME-03 / CON-E4 model, used for every
+  empty, not-found and load-error state) and the `appButton` directive
+  (principal, secundario, peligro, suave). They replace the old
+  `ComingSoonNotice` and the per-page `mat-card`, `.empty` and `.notice`
+  styles.
+- **Layout.** Desktop (960 px and up) uses the 248 px sidebar in primary dark
+  from ADM-02 with the role menu and the user (initials, name, role and
+  logout) at the bottom, plus a white top bar with the screen title. Phones
+  use a top bar with the screen title and a back arrow; the menu opens as a
+  drawer with the same sidebar. The back arrow goes back in the app history,
+  or to the role home on a direct visit. On the home screen the arrow is
+  replaced by the menu button. The page `h1` is visually hidden on phones
+  because the top bar already shows the title. Desktop "back" links on
+  detail pages are hidden on phones for the same reason.
+- **No bottom navigation.** CON-09 shows a bottom bar with 4 entries, but each
+  role has 6 menu entries, so the drawer is kept for both roles.
+- **PAS-07 without "Predeterminada".** The backend has no default card, so the
+  radio buttons of the mockup are replaced by the delete action (icon only on
+  phones). Expiry keeps the existing `MM/YYYY` format.
+- **CON-02 checklist.** The chip shows the existing checklist detail (Aprobado,
+  En revisión, Rechazado, Sin subir, vehicle count) and a short hint per
+  state replaces the file name, which the checklist model does not have.
+  The progress text stays "X de Y listos". The "Entendido" button of the
+  mockup is not used because the screen is a page, not a step.
+- **CON-09 empty agenda.** Until the backend has "my trips", both tabs show the
+  empty state, an info banner explains it and the driver can still open a
+  trip by its code.
+- **Trip requests list** uses the CON-09 date block (day, number, month) for
+  each request.
+- **Login and register** follow ADM-01: brand panel in primary dark on
+  desktop, form card on the right; on phones only the logo and the card.
+

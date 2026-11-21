@@ -1,34 +1,50 @@
-<section class="page">
-  <h1>Mis pagos</h1>
+<section class="sw-page sw-page--narrow">
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">Mis pagos</h1>
+      <p class="sw-page-subtitle">Historial de cobros de tus reservas.</p>
+    </div>
+  </header>
 
   @if (loading()) {
     <mat-progress-bar mode="indeterminate" />
   } @else if (loadFailed()) {
-    <div class="empty">
-      <p>No se pudo cargar tu historial de pagos.</p>
-      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
-    </div>
+    <app-card>
+      <app-empty-state
+        tone="error"
+        icon="wifi_off"
+        heading="No se pudo cargar tu historial de pagos."
+        message="Revisa tu conexión y vuelve a intentarlo."
+      >
+        <button mat-flat-button appButton emptyActions type="button" (click)="load()">
+          Reintentar
+        </button>
+      </app-empty-state>
+    </app-card>
   } @else if (sorted().length === 0) {
-    <div class="empty">
-      <mat-icon aria-hidden="true">receipt_long</mat-icon>
-      <p>Aún no tienes pagos registrados.</p>
-    </div>
+    <app-card>
+      <app-empty-state
+        icon="receipt_long"
+        heading="Aún no tienes pagos registrados."
+        message="Cuando reserves un viaje, verás aquí cada autorización y cobro."
+      />
+    </app-card>
   } @else {
-    <mat-accordion>
+    <mat-accordion class="payments" displayMode="flat">
       @for (payment of sorted(); track payment.id) {
         <mat-expansion-panel [attr.data-id]="payment.id">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{ amount(payment) | currency: payment.currency }}
+              <span class="sw-icon-bubble sw-icon-bubble--primary" aria-hidden="true">
+                <mat-icon>payments</mat-icon>
+              </span>
+              <span class="amount">{{ amount(payment) | currency: payment.currency }}</span>
             </mat-panel-title>
             <mat-panel-description>
-              <app-status-chip
-                [label]="labels[payment.status]"
-                [tone]="tones[payment.status]"
-              />
+              <app-status-chip [label]="labels[payment.status]" [tone]="tones[payment.status]" />
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <dl class="details">
+          <dl class="sw-details">
             <dt>Monto autorizado</dt>
             <dd>{{ payment.authorizedAmount ?? 0 | currency: payment.currency }}</dd>
             <dt>Monto cobrado</dt>
@@ -46,10 +62,10 @@
               <dd>{{ payment.voidedAt | date: 'medium' }}</dd>
             }
             <dt>Reserva</dt>
-            <dd class="mono">{{ payment.bookingId }}</dd>
+            <dd class="sw-mono">{{ payment.bookingId }}</dd>
             @if (payment.providerRef) {
               <dt>Referencia</dt>
-              <dd class="mono">{{ payment.providerRef }}</dd>
+              <dd class="sw-mono">{{ payment.providerRef }}</dd>
             }
           </dl>
         </mat-expansion-panel>

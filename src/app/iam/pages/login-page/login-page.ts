@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, input, signal} from '@angular/core';
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -9,6 +8,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../core/auth/auth.service';
 import {Role} from '../../model/auth.model';
+import {BrandLogo} from '../../../shared/components/brand-logo/brand-logo';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Login and public landing (US-32). */
 @Component({
@@ -17,11 +19,13 @@ import {Role} from '../../model/auth.model';
     ReactiveFormsModule,
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    BrandLogo,
+    NoticeBanner,
+    ButtonVariantDirective,
   ],
   templateUrl: './login-page.html',
   styleUrl: '../auth-page.scss',

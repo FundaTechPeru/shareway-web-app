@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -10,6 +9,8 @@ import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../core/auth/auth.service';
 import {NotificationService} from '../../../core/notifications/notification.service';
 import {PASSWORD_PATTERN, PHONE_PATTERN} from '../../../shared/validation/patterns';
+import {BrandLogo} from '../../../shared/components/brand-logo/brand-logo';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** Passenger self-registration (US-31). */
 @Component({
@@ -18,11 +19,12 @@ import {PASSWORD_PATTERN, PHONE_PATTERN} from '../../../shared/validation/patter
     ReactiveFormsModule,
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    BrandLogo,
+    ButtonVariantDirective,
   ],
   templateUrl: './register-page.html',
   styleUrl: '../auth-page.scss',

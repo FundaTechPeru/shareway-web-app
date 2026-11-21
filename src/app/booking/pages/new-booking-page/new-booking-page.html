@@ -1,50 +1,55 @@
-<section class="page">
+<section class="sw-page sw-page--form">
   @if (requestId(); as rid) {
-    <a mat-button [routerLink]="['/passenger/trip-requests', rid]">
+    <a mat-button appButton="secondary" class="sw-back-link" [routerLink]="['/passenger/trip-requests', rid]">
       <mat-icon>arrow_back</mat-icon>
       Volver a la solicitud
     </a>
   }
 
-  <h1>Reservar viaje</h1>
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">Reservar viaje</h1>
+      <p class="sw-page-subtitle">Revisa la tarifa estimada antes de confirmar tu asiento.</p>
+    </div>
+  </header>
 
   @if (!ready()) {
     <!-- TODO(backend): an endpoint must return the groupId for this request. -->
-    <app-coming-soon-notice
-      message="La tarifa y la reserva necesitan el grupo de viaje asignado por el servicio de reservas, que aún no está disponible desde la web."
-    />
+    <app-notice-banner tone="info" icon="schedule" heading="Disponible próximamente">
+      La tarifa y la reserva necesitan el grupo de viaje asignado por el servicio de reservas, que
+      aún no está disponible desde la web.
+    </app-notice-banner>
   }
 
-  <mat-card appearance="outlined">
+  <app-card heading="Tarifa estimada" [subheading]="fare() ? 'Regla de tarifa ' + fare()!.ruleVersion : ''">
     @if (loadingFare() || booking()) {
       <mat-progress-bar mode="indeterminate" />
     }
-    <mat-card-header>
-      <mat-icon matCardAvatar aria-hidden="true">payments</mat-icon>
-      <mat-card-title>Tarifa estimada</mat-card-title>
-      @if (fare(); as f) {
-        <mat-card-subtitle>Regla de tarifa {{ f.ruleVersion }}</mat-card-subtitle>
-      }
-    </mat-card-header>
-    <mat-card-content>
-      @if (fare(); as f) {
+    @if (fare(); as f) {
+      <div class="fare">
+        <span class="sw-icon-bubble sw-icon-bubble--warning" aria-hidden="true">
+          <mat-icon>payments</mat-icon>
+        </span>
         <p class="amount" data-testid="fare">{{ f.amount | currency: f.currency }}</p>
-        <p class="muted">
-          Se reservará el monto en tu tarjeta y se cobrará al finalizar el viaje.
-        </p>
-      } @else {
-        <p class="muted">—</p>
-      }
-    </mat-card-content>
-    <mat-card-actions>
+      </div>
+      <app-notice-banner tone="neutral" icon="credit_card">
+        Se reservará el monto en tu tarjeta y se cobrará al finalizar el viaje.
+      </app-notice-banner>
+    } @else {
+      <p class="sw-text-support">La tarifa aparecerá aquí cuando el viaje tenga un grupo asignado.</p>
+    }
+    <div cardActions>
       <button
         mat-flat-button
+        appButton
+        block
         type="button"
         (click)="reserve()"
         [disabled]="!ready() || booking() || !fare()"
       >
+        <mat-icon>check</mat-icon>
         Reservar
       </button>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+  </app-card>
 </section>

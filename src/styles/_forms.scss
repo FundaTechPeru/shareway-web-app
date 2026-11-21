@@ -1,0 +1,77 @@
+// Form fields with the label above the input, as in the guide:
+//   <div class="sw-field">
+//     <label class="sw-field__label" for="email">Correo</label>
+//     <mat-form-field appearance="outline"><input matInput id="email" /></mat-form-field>
+//   </div>
+@use './tokens' as sw;
+
+.sw-field {
+  display: flex;
+  flex-direction: column;
+  gap: sw.$space-2;
+  min-width: 0;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+.sw-field__label {
+  font: sw.$weight-medium 14px/20px sw.$font-family;
+  color: sw.$ink-2;
+}
+
+.mat-mdc-form-field {
+  --mat-form-field-container-text-size: 15px;
+  --mat-form-field-subscript-text-size: 13px;
+  --mat-form-field-error-text-color: #{sw.$error};
+  --mat-form-field-outlined-error-focus-outline-color: #{sw.$error};
+
+  .mat-mdc-text-field-wrapper {
+    background-color: sw.$surface;
+    border-radius: sw.$radius-sm;
+  }
+
+  .mat-icon[matPrefix],
+  .mat-icon[matSuffix] {
+    color: sw.$ink-3;
+  }
+}
+
+// Grid of fields: one column on phones, several on wider screens.
+.sw-form {
+  display: flex;
+  flex-direction: column;
+  gap: sw.$space-1;
+}
+
+.sw-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: sw.$space-1 sw.$space-4;
+
+  .sw-full {
+    grid-column: 1 / -1;
+  }
+}
+
+.sw-form-error {
+  font: sw.font(support);
+  color: sw.$error;
+}
+
+.sw-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: sw.$space-1;
+  margin: sw.$space-2 0 sw.$space-4;
+  padding: sw.$space-4;
+  border: 1px solid sw.$border;
+  border-radius: sw.$radius-md;
+
+  legend {
+    padding: 0 sw.$space-1;
+    font: sw.font(section-title);
+    font-size: 16px;
+  }
+}

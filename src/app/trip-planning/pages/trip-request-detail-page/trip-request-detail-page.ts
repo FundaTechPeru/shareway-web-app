@@ -1,7 +1,6 @@
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {ChangeDetectionStrategy, Component, OnInit, inject, input, signal} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
@@ -16,6 +15,9 @@ import {
   TripRequest,
 } from '../../model/trip-request.model';
 import {TripPlanningApiService} from '../../services/trip-planning-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** A trip request with its match proposals. */
 @Component({
@@ -25,10 +27,12 @@ import {TripPlanningApiService} from '../../services/trip-planning-api.service';
     DatePipe,
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatIconModule,
     MatProgressBarModule,
     StatusChip,
+    Card,
+    EmptyState,
+    ButtonVariantDirective,
   ],
   templateUrl: './trip-request-detail-page.html',
   styleUrl: './trip-request-detail-page.scss',

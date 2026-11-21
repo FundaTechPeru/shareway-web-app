@@ -1,0 +1,44 @@
+<section class="sw-page sw-page--narrow">
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">Mis viajes</h1>
+      <p class="sw-page-subtitle">Tu agenda de viajes confirmados.</p>
+    </div>
+  </header>
+
+  <mat-tab-group class="tabs" mat-stretch-tabs animationDuration="0ms">
+    <mat-tab label="Próximos">
+      <!-- TODO(backend): list the driver's upcoming trips when the endpoint exists. -->
+      <app-empty-state
+        icon="calendar_month"
+        heading="Tu agenda está vacía"
+        message="Aquí verás tus próximos viajes confirmados, ordenados por semana."
+      />
+    </mat-tab>
+    <mat-tab label="Historial">
+      <app-empty-state
+        icon="history"
+        heading="Aún no tienes viajes anteriores"
+        message="Los viajes que completes aparecerán en tu historial."
+      />
+    </mat-tab>
+  </mat-tab-group>
+
+  <app-notice-banner tone="info" icon="route" heading="Disponible próximamente">
+    La lista de tus viajes asignados estará disponible cuando el servicio de viajes la publique.
+    Mientras tanto, abre un viaje con su código.
+  </app-notice-banner>
+
+  <app-card heading="Abrir un viaje" subheading="Ingresa el código que recibiste para el viaje.">
+    <form class="open-form" (ngSubmit)="open()" novalidate>
+      <div class="sw-field">
+        <label class="sw-field__label" for="trip-id">Código del viaje</label>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-icon matPrefix aria-hidden="true">qr_code_2</mat-icon>
+          <input matInput id="trip-id" [formControl]="tripId" autocomplete="off" />
+        </mat-form-field>
+      </div>
+      <button mat-flat-button appButton type="submit">Abrir viaje</button>
+    </form>
+  </app-card>
+</section>

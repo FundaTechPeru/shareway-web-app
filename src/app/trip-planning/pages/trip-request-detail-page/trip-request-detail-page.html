@@ -1,5 +1,5 @@
-<section class="page">
-  <a mat-button routerLink="/passenger/trip-requests">
+<section class="sw-page sw-page--narrow">
+  <a mat-button appButton="secondary" routerLink="/passenger/trip-requests" class="sw-back-link">
     <mat-icon>arrow_back</mat-icon>
     Mis solicitudes
   </a>
@@ -8,68 +8,90 @@
     <mat-progress-bar mode="indeterminate" />
   } @else {
     @if (request(); as r) {
-      <mat-card appearance="outlined">
-        <mat-card-header>
-          <mat-icon matCardAvatar aria-hidden="true">route</mat-icon>
-          <mat-card-title>{{ r.originLabel }} → {{ r.destinationLabel }}</mat-card-title>
-          <mat-card-subtitle>
-            <app-status-chip [label]="requestLabels[r.status]" [tone]="requestTones[r.status]" />
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <dl class="details">
-            <dt>Fecha</dt>
-            <dd>{{ r.travelDate | date: 'fullDate' }}</dd>
-            <dt>Salida</dt>
-            <dd>Entre {{ r.earliestDeparture }} y {{ r.latestDeparture }}</dd>
-            <dt>Asientos</dt>
-            <dd>{{ r.seatsRequested }}</dd>
-          </dl>
-        </mat-card-content>
-      </mat-card>
+      <app-card>
+        <div class="route">
+          <span class="sw-icon-bubble sw-icon-bubble--primary" aria-hidden="true">
+            <mat-icon>route</mat-icon>
+          </span>
+          <div class="sw-list-item__body">
+            <h1 class="route-title">{{ r.originLabel }} → {{ r.destinationLabel }}</h1>
+            <span>
+              <app-status-chip [label]="requestLabels[r.status]" [tone]="requestTones[r.status]" />
+            </span>
+          </div>
+        </div>
+        <dl class="sw-details">
+          <dt>Fecha</dt>
+          <dd>{{ r.travelDate | date: 'fullDate' }}</dd>
+          <dt>Salida</dt>
+          <dd>Entre {{ r.earliestDeparture }} y {{ r.latestDeparture }}</dd>
+          <dt>Asientos</dt>
+          <dd>{{ r.seatsRequested }}</dd>
+        </dl>
+      </app-card>
     } @else {
-      <p class="muted">Solicitud {{ id() }}</p>
+      <p class="sw-text-support">Solicitud {{ id() }}</p>
     }
 
-    <header class="section-header">
-      <h2>Propuestas de conductores</h2>
-      <button mat-stroked-button type="button" (click)="searchDrivers()" [disabled]="searching()">
-        <mat-icon>search</mat-icon>
-        Buscar conductores
-      </button>
-    </header>
+    <section class="sw-section" aria-labelledby="proposals-title">
+      <div class="sw-section-header">
+        <h2 id="proposals-title" class="sw-section-title">Propuestas de conductores</h2>
+        <button
+          mat-flat-button
+          appButton="soft"
+          type="button"
+          (click)="searchDrivers()"
+          [disabled]="searching()"
+        >
+          <mat-icon>search</mat-icon>
+          Buscar conductores
+        </button>
+      </div>
 
-    @if (searching()) {
-      <mat-progress-bar mode="indeterminate" />
-    }
+      @if (searching()) {
+        <mat-progress-bar mode="indeterminate" />
+      }
 
-    @for (proposal of proposals(); track proposal.id) {
-      <mat-card appearance="outlined" class="proposal" [attr.data-id]="proposal.id">
-        <mat-card-header>
-          <mat-icon matCardAvatar aria-hidden="true">directions_car</mat-icon>
-          <mat-card-title>{{ proposal.estimatedFare | currency }}</mat-card-title>
-          <mat-card-subtitle>
-            Aprox. {{ proposal.estimatedDurationMinutes }} min ·
+      @for (proposal of proposals(); track proposal.id) {
+        <app-card class="proposal" [attr.data-id]="proposal.id">
+          <div class="proposal-row">
+            <span class="sw-icon-bubble sw-icon-bubble--success" aria-hidden="true">
+              <mat-icon>directions_car</mat-icon>
+            </span>
+            <div class="sw-list-item__body">
+              <span class="fare">{{ proposal.estimatedFare | currency }}</span>
+              <span class="sw-list-item__support">
+                <mat-icon class="inline-icon" aria-hidden="true">schedule</mat-icon>
+                Aprox. {{ proposal.estimatedDurationMinutes }} min
+              </span>
+            </div>
             <app-status-chip
               [label]="proposalLabels[proposal.status]"
               [tone]="proposalTones[proposal.status]"
             />
-          </mat-card-subtitle>
-        </mat-card-header>
-        @if (proposal.status === 'PROPOSED' || proposal.status === 'ACCEPTED') {
-          <mat-card-actions>
-            <a
-              mat-flat-button
-              routerLink="/passenger/bookings/new"
-              [queryParams]="{requestId: id()}"
-            >
-              Reservar
-            </a>
-          </mat-card-actions>
-        }
-      </mat-card>
-    } @empty {
-      <p class="muted">Aún no hay propuestas. Pulsa "Buscar conductores" para buscarlas.</p>
-    }
+          </div>
+          @if (proposal.status === 'PROPOSED' || proposal.status === 'ACCEPTED') {
+            <div cardActions class="sw-actions">
+              <a
+                mat-flat-button
+                appButton
+                routerLink="/passenger/bookings/new"
+                [queryParams]="{requestId: id()}"
+              >
+                Reservar
+              </a>
+            </div>
+          }
+        </app-card>
+      } @empty {
+        <app-card>
+          <app-empty-state
+            icon="person_search"
+            heading="Aún no hay propuestas"
+            message='Pulsa "Buscar conductores" para buscarlas.'
+          />
+        </app-card>
+      }
+    </section>
   }
 </section>
