@@ -1,8 +1,11 @@
-<section class="page">
-  <header class="header">
-    <h1>Mis vehículos</h1>
+<section class="sw-page">
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">Mis vehículos</h1>
+      <p class="sw-page-subtitle">Registra el vehículo con el que harás los viajes.</p>
+    </div>
     @if (editing() === null) {
-      <button mat-flat-button type="button" (click)="startCreate()">
+      <button mat-flat-button appButton type="button" (click)="startCreate()">
         <mat-icon>add</mat-icon>
         Registrar vehículo
       </button>
@@ -10,21 +13,21 @@
   </header>
 
   @if (editing() !== null) {
-    <mat-card appearance="outlined" class="form-card">
+    <app-card
+      [heading]="editing() === 'new' ? 'Registrar vehículo' : 'Editar vehículo'"
+      subheading="Los datos deben coincidir con la tarjeta de propiedad."
+    >
       @if (saving()) {
         <mat-progress-bar mode="indeterminate" />
       }
-      <mat-card-header>
-        <mat-card-title>
-          {{ editing() === 'new' ? 'Registrar vehículo' : 'Editar vehículo' }}
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="save()" novalidate class="form-grid">
+      <form [formGroup]="form" (ngSubmit)="save()" novalidate class="sw-form-grid">
+        <div class="sw-field">
+          <label class="sw-field__label" for="vehicle-plate">Placa</label>
           <mat-form-field appearance="outline">
-            <mat-label>Placa</mat-label>
+            <mat-icon matPrefix aria-hidden="true">directions_car</mat-icon>
             <input
               matInput
+              id="vehicle-plate"
               formControlName="plate"
               maxlength="7"
               autocomplete="off"
@@ -37,27 +40,39 @@
               <mat-error>Usa el formato ABC-123.</mat-error>
             }
           </mat-form-field>
-
+        </div>
+        <div class="sw-field">
+          <label class="sw-field__label" for="vehicle-brand">Marca</label>
           <mat-form-field appearance="outline">
-            <mat-label>Marca</mat-label>
-            <input matInput formControlName="brand" />
+            <input
+              matInput
+              id="vehicle-brand"
+              formControlName="brand"
+            />
             @if (form.controls.brand.invalid) {
               <mat-error>Ingresa la marca.</mat-error>
             }
           </mat-form-field>
-
+        </div>
+        <div class="sw-field">
+          <label class="sw-field__label" for="vehicle-model">Modelo</label>
           <mat-form-field appearance="outline">
-            <mat-label>Modelo</mat-label>
-            <input matInput formControlName="model" />
+            <input
+              matInput
+              id="vehicle-model"
+              formControlName="model"
+            />
             @if (form.controls.model.invalid) {
               <mat-error>Ingresa el modelo.</mat-error>
             }
           </mat-form-field>
-
+        </div>
+        <div class="sw-field">
+          <label class="sw-field__label" for="vehicle-year">Año</label>
           <mat-form-field appearance="outline">
-            <mat-label>Año</mat-label>
             <input
               matInput
+              id="vehicle-year"
               type="number"
               formControlName="year"
               [min]="limits.MIN_YEAR"
@@ -69,19 +84,27 @@
               </mat-error>
             }
           </mat-form-field>
-
+        </div>
+        <div class="sw-field">
+          <label class="sw-field__label" for="vehicle-color">Color</label>
           <mat-form-field appearance="outline">
-            <mat-label>Color</mat-label>
-            <input matInput formControlName="color" />
+            <input
+              matInput
+              id="vehicle-color"
+              formControlName="color"
+            />
             @if (form.controls.color.invalid) {
               <mat-error>Ingresa el color.</mat-error>
             }
           </mat-form-field>
-
+        </div>
+        <div class="sw-field">
+          <label class="sw-field__label" for="vehicle-seats">Asientos para pasajeros</label>
           <mat-form-field appearance="outline">
-            <mat-label>Asientos para pasajeros</mat-label>
+            <mat-icon matPrefix aria-hidden="true">event_seat</mat-icon>
             <input
               matInput
+              id="vehicle-seats"
               type="number"
               formControlName="seats"
               [min]="limits.MIN_SEATS"
@@ -91,47 +114,75 @@
               <mat-error>Entre {{ limits.MIN_SEATS }} y {{ limits.MAX_SEATS }} asientos.</mat-error>
             }
           </mat-form-field>
+        </div>
 
-          <div class="actions">
-            <button mat-button type="button" (click)="cancel()">Cancelar</button>
-            <button mat-flat-button type="submit" [disabled]="saving()">Guardar</button>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
+        <div class="sw-actions sw-actions--stack sw-full">
+          <button mat-stroked-button appButton="secondary" type="button" (click)="cancel()">
+            Cancelar
+          </button>
+          <button mat-flat-button appButton type="submit" [disabled]="saving()">Guardar</button>
+        </div>
+      </form>
+    </app-card>
   }
 
   @if (loading()) {
     <mat-progress-bar mode="indeterminate" />
   } @else if (loadFailed()) {
-    <div class="empty">
-      <p>No se pudieron cargar tus vehículos.</p>
-      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
-    </div>
+    <app-card>
+      <app-empty-state
+        tone="error"
+        icon="wifi_off"
+        heading="No se pudieron cargar tus vehículos."
+        message="Revisa tu conexión y vuelve a intentarlo."
+      >
+        <button mat-flat-button appButton emptyActions type="button" (click)="load()">
+          Reintentar
+        </button>
+      </app-empty-state>
+    </app-card>
   } @else if (vehicles().length === 0) {
-    <div class="empty">
-      <mat-icon aria-hidden="true">directions_car</mat-icon>
-      <p>Aún no registraste ningún vehículo.</p>
-    </div>
+    <app-card>
+      <app-empty-state
+        icon="directions_car"
+        heading="Aún no registraste ningún vehículo."
+        message="Necesitas un vehículo registrado para quedar habilitado."
+      />
+    </app-card>
   } @else {
-    <div class="grid">
+    <div class="sw-grid">
       @for (vehicle of vehicles(); track vehicle.id) {
-        <mat-card appearance="outlined" [attr.data-plate]="vehicle.plate">
-          <mat-card-header>
-            <mat-icon matCardAvatar aria-hidden="true">directions_car</mat-icon>
-            <mat-card-title>{{ vehicle.brand }} {{ vehicle.model }}</mat-card-title>
-            <mat-card-subtitle>{{ vehicle.plate }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{ vehicle.year }} · {{ vehicle.color }} · {{ vehicle.seats }} asientos</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button type="button" (click)="startEdit(vehicle)">
+        <app-card [attr.data-plate]="vehicle.plate">
+          <div class="vehicle">
+            <span class="sw-icon-bubble sw-icon-bubble--primary" aria-hidden="true">
+              <mat-icon>directions_car</mat-icon>
+            </span>
+            <span class="sw-list-item__body">
+              <span class="sw-list-item__title">{{ vehicle.brand }} {{ vehicle.model }}</span>
+              <span class="plate">{{ vehicle.plate }}</span>
+            </span>
+          </div>
+          <dl class="sw-details">
+            <dt>Año</dt>
+            <dd>{{ vehicle.year }}</dd>
+            <dt>Color</dt>
+            <dd>{{ vehicle.color }}</dd>
+            <dt>Asientos</dt>
+            <dd>{{ vehicle.seats }} asientos</dd>
+          </dl>
+          <div cardActions>
+            <button
+              mat-stroked-button
+              appButton="secondary"
+              block
+              type="button"
+              (click)="startEdit(vehicle)"
+            >
               <mat-icon>edit</mat-icon>
               Editar
             </button>
-          </mat-card-actions>
-        </mat-card>
+          </div>
+        </app-card>
       }
     </div>
   }

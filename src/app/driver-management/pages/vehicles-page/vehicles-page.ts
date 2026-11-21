@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, inject, signal} from '@angular/core';
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -15,6 +14,9 @@ import {
   VehicleResponse,
 } from '../../model/vehicle.model';
 import {VehiclesApiService} from '../../services/vehicles-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 export const MIN_YEAR = 1980;
 export const MAX_YEAR = new Date().getFullYear() + 1;
@@ -25,11 +27,13 @@ export const MAX_YEAR = new Date().getFullYear() + 1;
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
-    MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    Card,
+    EmptyState,
+    ButtonVariantDirective,
   ],
   templateUrl: './vehicles-page.html',
   styleUrl: './vehicles-page.scss',
