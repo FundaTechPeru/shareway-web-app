@@ -164,7 +164,7 @@ a.sw-list-item {
   font: sw.font(support);
   font-size: 14px;
   color: sw.$ink-3;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .sw-list-item__chevron {

@@ -73,11 +73,13 @@
                     <span class="sw-list-item__support">
                       Viaje completado el {{ settlement.tripCompletedAt | date: 'mediumDate' }}
                     </span>
+                    <span class="chip">
+                      <app-status-chip
+                        [label]="labels[settlement.status]"
+                        [tone]="tones[settlement.status]"
+                      />
+                    </span>
                   </span>
-                  <app-status-chip
-                    [label]="labels[settlement.status]"
-                    [tone]="tones[settlement.status]"
-                  />
                   <mat-icon class="sw-list-item__chevron" aria-hidden="true">chevron_right</mat-icon>
                 </a>
               </li>
