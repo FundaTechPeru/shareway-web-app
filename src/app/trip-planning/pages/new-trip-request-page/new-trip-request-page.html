@@ -1,15 +1,23 @@
-<section class="page">
-  <h1>Programar un viaje</h1>
+<section class="sw-page sw-page--form">
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">Programar un viaje</h1>
+      <p class="sw-page-subtitle">
+        Indica origen, destino y horario. Buscaremos conductores verificados para compartirlo.
+      </p>
+    </div>
+  </header>
 
-  <mat-card appearance="outlined">
+  <app-card>
     @if (saving()) {
       <mat-progress-bar mode="indeterminate" />
     }
-    <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form-grid">
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Origen</mat-label>
-          <mat-select formControlName="originId">
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="sw-form-grid">
+      <div class="sw-field sw-full">
+        <label class="sw-field__label" id="origin-label">Origen</label>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix aria-hidden="true">trip_origin</mat-icon>
+          <mat-select formControlName="originId" aria-labelledby="origin-label">
             <mat-optgroup label="Distritos">
               @for (place of districts; track place.id) {
                 <mat-option [value]="place.id">{{ place.label }}</mat-option>
@@ -25,10 +33,12 @@
             <mat-error>Elige el origen.</mat-error>
           }
         </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Destino</mat-label>
-          <mat-select formControlName="destinationId">
+      </div>
+      <div class="sw-field sw-full">
+        <label class="sw-field__label" id="destination-label">Destino</label>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix aria-hidden="true">location_on</mat-icon>
+          <mat-select formControlName="destinationId" aria-labelledby="destination-label">
             <mat-optgroup label="Distritos">
               @for (place of districts; track place.id) {
                 <mat-option [value]="place.id">{{ place.label }}</mat-option>
@@ -44,52 +54,70 @@
             <mat-error>Elige el destino.</mat-error>
           }
         </mat-form-field>
-
+      </div>
+      <div class="sw-field">
+        <label class="sw-field__label" for="travel-date">Fecha del viaje</label>
         <mat-form-field appearance="outline">
-          <mat-label>Fecha del viaje</mat-label>
-          <input matInput type="date" formControlName="travelDate" [min]="minDate" />
+          <mat-icon matPrefix aria-hidden="true">calendar_month</mat-icon>
+          <input matInput id="travel-date" type="date" formControlName="travelDate" [min]="minDate" />
           @if (form.controls.travelDate.invalid) {
             <mat-error>Elige la fecha.</mat-error>
           }
         </mat-form-field>
-
+      </div>
+      <div class="sw-field">
+        <label class="sw-field__label" id="seats-label">Asientos</label>
         <mat-form-field appearance="outline">
-          <mat-label>Asientos</mat-label>
-          <mat-select formControlName="seatsRequested">
+          <mat-icon matPrefix aria-hidden="true">event_seat</mat-icon>
+          <mat-select formControlName="seatsRequested" aria-labelledby="seats-label">
             @for (n of seatOptions; track n) {
               <mat-option [value]="n">{{ n }}</mat-option>
             }
           </mat-select>
-        </mat-form-field>
 
+        </mat-form-field>
+      </div>
+      <div class="sw-field">
+        <label class="sw-field__label" for="earliest">Salir desde</label>
         <mat-form-field appearance="outline">
-          <mat-label>Salir desde</mat-label>
-          <input matInput type="time" formControlName="earliestDeparture" />
+          <mat-icon matPrefix aria-hidden="true">schedule</mat-icon>
+          <input matInput id="earliest" type="time" formControlName="earliestDeparture" />
           <mat-hint>Hora más temprana</mat-hint>
         </mat-form-field>
-
+      </div>
+      <div class="sw-field">
+        <label class="sw-field__label" for="latest">Salir hasta</label>
         <mat-form-field appearance="outline">
-          <mat-label>Salir hasta</mat-label>
-          <input matInput type="time" formControlName="latestDeparture" />
+          <mat-icon matPrefix aria-hidden="true">schedule</mat-icon>
+          <input matInput id="latest" type="time" formControlName="latestDeparture" />
           <mat-hint>Hora más tardía</mat-hint>
         </mat-form-field>
+      </div>
 
-        @if (form.touched || form.dirty) {
-          @if (form.hasError('samePlace')) {
-            <p class="error full">El origen y el destino deben ser distintos.</p>
-          }
-          @if (form.hasError('pastDate')) {
-            <p class="error full">La fecha no puede ser anterior a hoy.</p>
-          }
-          @if (form.hasError('window')) {
-            <p class="error full">La hora "hasta" debe ser posterior a la hora "desde".</p>
-          }
+      @if (form.touched || form.dirty) {
+        @if (form.hasError('samePlace')) {
+          <p class="sw-form-error sw-full" role="alert">El origen y el destino deben ser distintos.</p>
         }
+        @if (form.hasError('pastDate')) {
+          <p class="sw-form-error sw-full" role="alert">La fecha no puede ser anterior a hoy.</p>
+        }
+        @if (form.hasError('window')) {
+          <p class="sw-form-error sw-full" role="alert">
+            La hora "hasta" debe ser posterior a la hora "desde".
+          </p>
+        }
+      }
 
-        <div class="actions full">
-          <button mat-flat-button type="submit" [disabled]="saving()">Buscar conductor</button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+      <div class="sw-full submit">
+        <button mat-flat-button appButton block type="submit" [disabled]="saving()">
+          <mat-icon>search</mat-icon>
+          Buscar conductor
+        </button>
+      </div>
+    </form>
+  </app-card>
+
+  <app-notice-banner tone="warning" icon="schedule" heading="Programa con anticipación">
+    Mientras más amplio sea tu horario de salida, más fácil será encontrar un conductor.
+  </app-notice-banner>
 </section>

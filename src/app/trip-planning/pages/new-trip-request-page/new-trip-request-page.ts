@@ -7,7 +7,6 @@ import {
   Validators,
 } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -17,6 +16,10 @@ import {AuthService} from '../../../core/auth/auth.service';
 import {NotificationService} from '../../../core/notifications/notification.service';
 import {LIMA_PLACES, Place, findPlace} from '../../model/places';
 import {TripPlanningApiService} from '../../services/trip-planning-api.service';
+import {MatIconModule} from '@angular/material/icon';
+import {Card} from '../../../shared/components/card/card';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 export const MAX_SEATS_REQUESTED = 4;
 
@@ -57,11 +60,14 @@ export function tripRequestValidator(
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
-    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
     MatSelectModule,
+    MatIconModule,
+    Card,
+    NoticeBanner,
+    ButtonVariantDirective,
   ],
   templateUrl: './new-trip-request-page.html',
   styleUrl: './new-trip-request-page.scss',
