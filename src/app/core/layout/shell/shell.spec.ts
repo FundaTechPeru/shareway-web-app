@@ -76,4 +76,17 @@ describe('Shell', () => {
     button!.click();
     expect(logout).toHaveBeenCalled();
   });
+
+  it('shows the role and the user initials in the sidebar', async () => {
+    const fixture = await create();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.brand-role')?.textContent).toContain('Pasajero');
+    expect(el.querySelector('.avatar')?.textContent).toContain('AP');
+  });
+
+  it('shows the screen title in the top bar', async () => {
+    const fixture = await create();
+    const title = (fixture.nativeElement as HTMLElement).querySelector('.topbar-title');
+    expect(title?.textContent).toContain('ShareWay');
+  });
 });

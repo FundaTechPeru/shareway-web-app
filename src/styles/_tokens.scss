@@ -1,0 +1,121 @@
+// ShareWay design tokens, taken from the style guide.
+// Use the SCSS variables in Sass code and the `--sw-*` custom properties in
+// component styles (they are emitted on :root by `styles.scss`).
+@use 'sass:list';
+@use 'sass:map';
+
+// Color: petrol blue for trust, amber for what needs attention.
+$primary: #0f5f73;
+$primary-dark: #0a4656;
+$primary-soft: #d9eef2;
+$accent: #f2a31b;
+$accent-soft: #fff1d1;
+$on-accent: #5c3a00;
+$success: #1b8554;
+$success-soft: #e1f2e8;
+$error: #c2362b;
+$error-soft: #f9e3e1;
+$warning: #9a5b00;
+
+// Ink and borders.
+$ink: #132329;
+$ink-2: #47595f;
+$ink-3: #73858b;
+$border-strong: #9faeb4;
+$border: #d5dde0;
+$surface-2: #eaf0f2;
+$background: #f4f7f8;
+$surface: #ffffff;
+
+// Typography: Roboto 400, 500 and 700.
+$font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-bold: 700;
+
+// name: (size, line-height, weight)
+$type-scale: (
+  screen-title: (28px, 36px, $weight-bold),
+  section-title: (19px, 26px, $weight-medium),
+  highlight: (19px, 26px, $weight-bold),
+  body: (15px, 22px, $weight-regular),
+  support: (13px, 18px, $weight-regular),
+  label: (12px, 16px, $weight-medium),
+);
+
+// Spacing in multiples of 4.
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 20px;
+$space-6: 24px;
+$space-8: 32px;
+$space-10: 40px;
+
+// Radius: 12 to 18 px; pills for buttons and chips.
+$radius-sm: 12px;
+$radius-md: 16px;
+$radius-lg: 18px;
+$radius-pill: 999px;
+
+// Controls.
+$button-height: 48px;
+$button-height-large: 52px;
+$icon-size: 24px;
+
+// Layout.
+$sidebar-width: 248px;
+$topbar-height: 64px;
+$content-max-width: 1120px;
+$mobile-margin: 16px;
+$desktop-breakpoint: 960px;
+
+@function font($name) {
+  $entry: map.get($type-scale, $name);
+  @return list.nth($entry, 3) #{list.nth($entry, 1)}/#{list.nth($entry, 2)} $font-family;
+}
+
+@mixin custom-properties {
+  --sw-color-primary: #{$primary};
+  --sw-color-primary-dark: #{$primary-dark};
+  --sw-color-primary-soft: #{$primary-soft};
+  --sw-color-accent: #{$accent};
+  --sw-color-accent-soft: #{$accent-soft};
+  --sw-color-on-accent: #{$on-accent};
+  --sw-color-success: #{$success};
+  --sw-color-success-soft: #{$success-soft};
+  --sw-color-error: #{$error};
+  --sw-color-error-soft: #{$error-soft};
+  --sw-color-warning: #{$warning};
+  --sw-color-ink: #{$ink};
+  --sw-color-ink-2: #{$ink-2};
+  --sw-color-ink-3: #{$ink-3};
+  --sw-color-border-strong: #{$border-strong};
+  --sw-color-border: #{$border};
+  --sw-color-surface-2: #{$surface-2};
+  --sw-color-background: #{$background};
+  --sw-color-surface: #{$surface};
+
+  @each $name, $entry in $type-scale {
+    --sw-font-#{$name}: #{font($name)};
+  }
+
+  --sw-space-1: #{$space-1};
+  --sw-space-2: #{$space-2};
+  --sw-space-3: #{$space-3};
+  --sw-space-4: #{$space-4};
+  --sw-space-5: #{$space-5};
+  --sw-space-6: #{$space-6};
+  --sw-space-8: #{$space-8};
+  --sw-space-10: #{$space-10};
+
+  --sw-radius-sm: #{$radius-sm};
+  --sw-radius-md: #{$radius-md};
+  --sw-radius-lg: #{$radius-lg};
+  --sw-radius-pill: #{$radius-pill};
+
+  --sw-sidebar-width: #{$sidebar-width};
+  --sw-content-max-width: #{$content-max-width};
+  --sw-page-padding: #{$mobile-margin};
+}

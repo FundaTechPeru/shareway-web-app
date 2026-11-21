@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -23,6 +22,9 @@ import {
 } from '../../model/availability.model';
 import {AvailabilityApiService} from '../../services/availability-api.service';
 import {noOverlapValidator, timeRangeValidator} from './availability-validators';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 type SlotForm = FormGroup<{startTime: FormControl<string>; endTime: FormControl<string>}>;
 type WeekForm = FormGroup<Record<DayOfWeek, FormArray<SlotForm>>>;
@@ -33,11 +35,13 @@ type WeekForm = FormGroup<Record<DayOfWeek, FormArray<SlotForm>>>;
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
-    MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    Card,
+    EmptyState,
+    ButtonVariantDirective,
   ],
   templateUrl: './availability-page.html',
   styleUrl: './availability-page.scss',

@@ -1,0 +1,78 @@
+// Button variants from the guide. Apply them with the `appButton` directive
+// on a Material button: primary/soft on `mat-flat-button`, secondary/danger
+// on `mat-stroked-button`, and link-like actions on `mat-button`.
+@use './tokens' as sw;
+
+.mat-mdc-button-base.sw-button {
+  --mat-button-filled-label-text-weight: #{sw.$weight-medium};
+  --mat-button-outlined-label-text-weight: #{sw.$weight-medium};
+  --mat-button-text-label-text-weight: #{sw.$weight-medium};
+  --mat-button-filled-disabled-container-color: #{sw.$surface-2};
+  --mat-button-filled-disabled-label-text-color: #{sw.$border-strong};
+  --mat-button-outlined-disabled-label-text-color: #{sw.$border-strong};
+  --mat-button-outlined-disabled-outline-color: #{sw.$border};
+
+  .mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+  }
+}
+
+.sw-button--primary {
+  --mat-button-filled-container-color: #{sw.$primary};
+  --mat-button-filled-label-text-color: #ffffff;
+}
+
+.sw-button--secondary {
+  --mat-button-outlined-outline-color: #{sw.$border-strong};
+  --mat-button-outlined-label-text-color: #{sw.$primary};
+  --mat-button-text-label-text-color: #{sw.$primary};
+  background-color: sw.$surface;
+}
+
+.sw-button--danger {
+  --mat-button-outlined-outline-color: #{sw.$error};
+  --mat-button-outlined-label-text-color: #{sw.$error};
+  --mat-button-text-label-text-color: #{sw.$error};
+  --mat-button-filled-container-color: #{sw.$error};
+  --mat-button-filled-label-text-color: #ffffff;
+  --mat-button-outlined-state-layer-color: #{sw.$error};
+  --mat-button-text-state-layer-color: #{sw.$error};
+}
+
+.sw-button--soft {
+  --mat-button-filled-container-color: #{sw.$primary-soft};
+  --mat-button-filled-label-text-color: #{sw.$primary};
+  --mat-button-filled-state-layer-color: #{sw.$primary};
+}
+
+.sw-button--block {
+  width: 100%;
+  --mat-button-filled-container-height: #{sw.$button-height-large};
+  --mat-button-outlined-container-height: #{sw.$button-height-large};
+}
+
+// Actions row used at the bottom of cards and forms.
+.sw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: sw.$space-2;
+}
+
+.sw-actions--start {
+  justify-content: flex-start;
+}
+
+@media (max-width: 599.98px) {
+  .sw-actions--stack {
+    flex-direction: column-reverse;
+    align-items: stretch;
+
+    > .mat-mdc-button-base {
+      width: 100%;
+    }
+  }
+}

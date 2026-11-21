@@ -1,60 +1,69 @@
-.page {
-  padding: var(--sw-page-padding);
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-h1 {
-  font: var(--mat-sys-headline-small);
-}
-
+// Vertical progress of the booking (stepper with check marks).
 .steps {
-  list-style: none;
-  padding: 0;
-  margin: 16px 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
   li {
-    padding: 4px 10px;
-    border-radius: 999px;
-    font: var(--mat-sys-label-medium);
-    background: var(--mat-sys-surface-container-high);
-    color: var(--mat-sys-on-surface-variant);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    color: var(--sw-color-ink-3);
+
+    &:not(:last-child)::after {
+      position: absolute;
+      top: 34px;
+      left: 13px;
+      width: 2px;
+      height: 20px;
+      background: var(--sw-color-border);
+      content: '';
+    }
   }
 
-  li.done {
-    background: var(--mat-sys-primary-container);
-    color: var(--mat-sys-on-primary-container);
+  .done {
+    color: var(--sw-color-ink);
+
+    &::after {
+      background: var(--sw-color-primary) !important;
+    }
+  }
+
+  .current .step-label {
+    font-weight: 700;
   }
 }
 
-mat-card-actions {
-  flex-wrap: wrap;
-  gap: 8px;
+.dot {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--sw-color-border);
+  border-radius: 50%;
+  background: var(--sw-color-surface);
+  font: 700 13px/1 Roboto, sans-serif;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+
+  .done & {
+    border-color: var(--sw-color-primary);
+    background: var(--sw-color-primary);
+    color: #ffffff;
+  }
 }
 
-.penalty {
-  padding: 8px 12px;
-  border-radius: var(--mat-sys-corner-small);
-  background: var(--mat-sys-tertiary-container);
-  color: var(--mat-sys-on-tertiary-container);
-}
-
-.confirm {
-  padding: 0 8px;
-}
-
-.danger {
-  color: var(--mat-sys-error);
-}
-
-.mono {
-  font-family: monospace;
-  word-break: break-all;
-}
-
-.muted {
-  color: var(--mat-sys-on-surface-variant);
+.confirm-actions {
+  margin-top: 12px;
 }

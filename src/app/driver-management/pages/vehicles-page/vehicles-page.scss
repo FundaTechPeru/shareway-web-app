@@ -1,49 +1,15 @@
-.page {
-  padding: var(--sw-page-padding);
-  max-width: var(--sw-content-max-width);
-  margin: 0 auto;
-}
-
-.header {
+.vehicle {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
-
-  h1 {
-    font: var(--mat-sys-headline-small);
-    margin: 0;
-  }
-}
-
-.form-card {
-  margin-bottom: 24px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 4px 16px;
-  margin-top: 16px;
-}
-
-.actions {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
 }
 
-.empty {
-  text-align: center;
-  padding: 32px 0;
-  color: var(--mat-sys-on-surface-variant);
+.plate {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border: 1px solid var(--sw-color-border-strong);
+  border-radius: 6px;
+  font: 700 14px/20px 'Roboto Mono', monospace;
+  letter-spacing: 1px;
+  color: var(--sw-color-ink-2);
 }

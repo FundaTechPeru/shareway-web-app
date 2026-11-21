@@ -2,11 +2,10 @@ import {DatePipe} from '@angular/common';
 import {ChangeDetectionStrategy, Component, OnInit, inject, signal} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
 import {AuthService} from '../../../core/auth/auth.service';
-import {ComingSoonNotice} from '../../../shared/components/coming-soon-notice/coming-soon-notice';
+import {NoticeBanner} from '../../../shared/components/notice-banner/notice-banner';
 import {StatusChip} from '../../../shared/components/status-chip/status-chip';
 import {
   TRIP_REQUEST_STATUS_LABELS,
@@ -14,6 +13,9 @@ import {
   TripRequest,
 } from '../../model/trip-request.model';
 import {TripPlanningApiService} from '../../services/trip-planning-api.service';
+import {Card} from '../../../shared/components/card/card';
+import {EmptyState} from '../../../shared/components/empty-state/empty-state';
+import {ButtonVariantDirective} from '../../../shared/components/button/button-variant';
 
 /** The passenger's trip requests. */
 @Component({
@@ -23,10 +25,12 @@ import {TripPlanningApiService} from '../../services/trip-planning-api.service';
     RouterLink,
     MatButtonModule,
     MatIconModule,
-    MatListModule,
     MatProgressBarModule,
-    ComingSoonNotice,
+    NoticeBanner,
     StatusChip,
+    Card,
+    EmptyState,
+    ButtonVariantDirective,
   ],
   templateUrl: './trip-requests-page.html',
   styleUrl: './trip-requests-page.scss',

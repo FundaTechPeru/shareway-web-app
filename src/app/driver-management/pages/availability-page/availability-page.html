@@ -1,16 +1,17 @@
-<section class="page">
-  <header class="header">
-    <div>
-      <h1>Mi disponibilidad</h1>
-      <p class="lead">Indica en qué horarios puedes conducir cada semana.</p>
+<section class="sw-page">
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">Mi disponibilidad</h1>
+      <p class="sw-page-subtitle">Indica en qué horarios puedes conducir cada semana.</p>
     </div>
     <button
       mat-flat-button
+      appButton
       type="button"
       (click)="save()"
       [disabled]="saving() || loading() || form.pristine"
     >
-      <mat-icon>save</mat-icon>
+      <mat-icon>check</mat-icon>
       Guardar
     </button>
   </header>
@@ -20,31 +21,48 @@
   }
 
   @if (loadFailed()) {
-    <div class="empty">
-      <p>No se pudo cargar tu disponibilidad.</p>
-      <button mat-stroked-button type="button" (click)="load()">Reintentar</button>
-    </div>
+    <app-card>
+      <app-empty-state
+        tone="error"
+        icon="wifi_off"
+        heading="No se pudo cargar tu disponibilidad."
+        message="Revisa tu conexión y vuelve a intentarlo."
+      >
+        <button mat-flat-button appButton emptyActions type="button" (click)="load()">
+          Reintentar
+        </button>
+      </app-empty-state>
+    </app-card>
   } @else if (!loading()) {
-    <form [formGroup]="form" class="week" novalidate>
+    <form [formGroup]="form" class="sw-grid" novalidate>
       @for (day of days; track day) {
-        <mat-card appearance="outlined" [attr.data-day]="day">
-          <mat-card-header>
-            <mat-card-title>{{ dayLabels[day] }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content [formArrayName]="day">
+        <app-card [attr.data-day]="day" class="day" [heading]="dayLabels[day]">
+          <span
+            cardHeaderAction
+            class="count"
+            [class.empty]="form.controls[day].length === 0"
+          >
+            {{ form.controls[day].length === 0 ? 'Libre' : form.controls[day].length + ' horario(s)' }}
+          </span>
+          <div class="slots" [formArrayName]="day">
             @for (slot of form.controls[day].controls; track slot; let i = $index) {
               <div class="slot" [formGroupName]="i">
-                <mat-form-field appearance="outline" subscriptSizing="dynamic">
-                  <mat-label>Desde</mat-label>
-                  <input matInput type="time" formControlName="startTime" />
-                </mat-form-field>
-                <mat-form-field appearance="outline" subscriptSizing="dynamic">
-                  <mat-label>Hasta</mat-label>
-                  <input matInput type="time" formControlName="endTime" />
-                </mat-form-field>
+                <div class="sw-field">
+                  <label class="sw-field__label" [for]="day + '-start-' + i">Desde</label>
+                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                    <input matInput type="time" [id]="day + '-start-' + i" formControlName="startTime" />
+                  </mat-form-field>
+                </div>
+                <div class="sw-field">
+                  <label class="sw-field__label" [for]="day + '-end-' + i">Hasta</label>
+                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                    <input matInput type="time" [id]="day + '-end-' + i" formControlName="endTime" />
+                  </mat-form-field>
+                </div>
                 <button
                   mat-icon-button
                   type="button"
+                  class="remove"
                   (click)="removeSlot(day, i)"
                   [attr.aria-label]="'Quitar horario del ' + dayLabels[day]"
                 >
@@ -52,22 +70,24 @@
                 </button>
               </div>
               @if (slot.hasError('timeRange')) {
-                <p class="error">La hora de fin debe ser posterior a la de inicio.</p>
+                <p class="sw-form-error" role="alert">
+                  La hora de fin debe ser posterior a la de inicio.
+                </p>
               }
             } @empty {
-              <p class="muted">Sin horarios.</p>
+              <p class="sw-text-support">Sin horarios.</p>
             }
             @if (form.controls[day].hasError('overlap')) {
-              <p class="error">Hay horarios que se superponen.</p>
+              <p class="sw-form-error" role="alert">Hay horarios que se superponen.</p>
             }
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button type="button" (click)="addSlot(day)">
+          </div>
+          <div cardActions>
+            <button mat-flat-button appButton="soft" block type="button" (click)="addSlot(day)">
               <mat-icon>add</mat-icon>
               Agregar horario
             </button>
-          </mat-card-actions>
-        </mat-card>
+          </div>
+        </app-card>
       }
     </form>
   }

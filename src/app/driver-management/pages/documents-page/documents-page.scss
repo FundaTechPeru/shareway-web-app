@@ -1,44 +1,30 @@
-.page {
-  padding: var(--sw-page-padding);
-  max-width: var(--sw-content-max-width);
-  margin: 0 auto;
+.doc {
+  height: 100%;
+  gap: 12px;
 }
 
-h1 {
-  font: var(--mat-sys-headline-small);
-  margin: 0;
+.doc-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.lead,
-.meta {
-  color: var(--mat-sys-on-surface-variant);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-mat-card-content {
-  padding-top: 8px;
+.doc-title {
+  font: 500 17px/24px Roboto, sans-serif;
 }
 
 .file {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   word-break: break-all;
+
+  mat-icon {
+    flex-shrink: 0;
+    color: var(--sw-color-ink-3);
+  }
 }
 
-.rejection {
-  padding: 8px 12px;
-  border-radius: var(--mat-sys-corner-small);
-  background: var(--mat-sys-error-container);
-  color: var(--mat-sys-on-error-container);
-}
-
-.empty {
-  text-align: center;
-  padding: 32px 0;
+[cardActions] {
+  margin-top: auto;
 }
