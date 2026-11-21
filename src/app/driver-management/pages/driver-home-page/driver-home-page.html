@@ -1,66 +1,110 @@
-<section class="page">
-  <h1>Hola{{ profile()?.fullName ? ', ' + profile()!.fullName : '' }}</h1>
+<section class="sw-page">
+  <header class="sw-page-header">
+    <div class="sw-page-header__text">
+      <h1 class="sw-page-title">Hola{{ profile()?.fullName ? ', ' + profile()!.fullName : '' }}</h1>
+      <p class="sw-page-subtitle">Estado de habilitación de tu cuenta de conductor.</p>
+    </div>
+  </header>
 
   @if (loading()) {
     <mat-progress-bar mode="indeterminate" />
   } @else {
-    <div class="grid">
-      <mat-card appearance="outlined" class="status-card">
-        <mat-card-header>
-          <mat-icon matCardAvatar aria-hidden="true">
-            {{ verified() ? 'verified' : 'pending_actions' }}
-          </mat-icon>
-          <mat-card-title>Estado de verificación</mat-card-title>
-          <mat-card-subtitle>
-            <app-status-chip [label]="statusLabel()" [tone]="verified() ? 'success' : 'warning'" />
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          @if (verified()) {
-            <p>Tu cuenta está verificada. ¡Ya puedes recibir viajes!</p>
-          } @else {
-            <p>
-              Completa los pasos para ser verificado: {{ completed() }} de
-              {{ checklist().length }} listos.
-            </p>
+    <div class="layout">
+      <div class="main">
+        <div class="status" [class.verified]="verified()" data-testid="status">
+          <div class="status-head">
+            <span class="status-icon" aria-hidden="true">
+              <mat-icon>{{ verified() ? 'verified_user' : 'schedule' }}</mat-icon>
+            </span>
+            <div class="status-text">
+              <p class="status-title">{{ statusLabel() }}</p>
+              @if (verified()) {
+                <p>Tu cuenta está verificada. ¡Ya puedes recibir viajes!</p>
+              } @else {
+                <p>Completa los requisitos para que revisemos tu cuenta.</p>
+              }
+            </div>
+          </div>
+          @if (!verified()) {
+            <div
+              class="progress"
+              role="progressbar"
+              aria-label="Requisitos completos"
+              [attr.aria-valuenow]="completed()"
+              aria-valuemin="0"
+              [attr.aria-valuemax]="checklist().length"
+            >
+              <span class="progress-fill" [style.width.%]="(completed() / checklist().length) * 100"></span>
+            </div>
+            <p class="progress-label">Requisitos: {{ completed() }} de {{ checklist().length }} listos</p>
           }
-          <mat-list>
-            @for (item of checklist(); track item.label) {
-              <a mat-list-item [routerLink]="item.link" [attr.data-state]="item.state">
-                <mat-icon matListItemIcon [class]="'state-' + item.state" aria-hidden="true">
-                  {{ stateIcons[item.state] }}
-                </mat-icon>
-                <span matListItemTitle>{{ item.label }}</span>
-                <span matListItemLine>{{ item.detail }}</span>
-              </a>
-            }
-          </mat-list>
-        </mat-card-content>
-      </mat-card>
+        </div>
 
-      <mat-card appearance="outlined" data-testid="earnings">
-        <mat-card-header>
-          <mat-icon matCardAvatar aria-hidden="true">payments</mat-icon>
-          <mat-card-title>Mis ganancias</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
+        <section class="sw-section" aria-labelledby="requirements-title">
+          <h2 id="requirements-title" class="sw-section-title">Requisitos</h2>
+          <app-card class="sw-card--list">
+            <ul class="sw-list">
+              @for (item of checklist(); track item.label) {
+                <li>
+                  <a class="sw-list-item" [routerLink]="item.link" [attr.data-state]="item.state">
+                    <span [class]="'sw-icon-bubble sw-icon-bubble--' + bubbleTones[item.state]" aria-hidden="true">
+                      <mat-icon>{{ item.link.endsWith('vehicles') ? 'directions_car' : 'description' }}</mat-icon>
+                    </span>
+                    <span class="sw-list-item__body">
+                      <span class="sw-list-item__title">{{ item.label }}</span>
+                      <span class="sw-list-item__support">{{ stateHints[item.state] }}</span>
+                    </span>
+                    <app-status-chip [label]="item.detail" [tone]="chipTones[item.state]" />
+                  </a>
+                </li>
+              }
+            </ul>
+          </app-card>
+        </section>
+
+        @if (!verified()) {
+          <app-notice-banner tone="neutral" icon="lock" heading="Mientras revisamos tu cuenta">
+            No puedes recibir propuestas ni iniciar viajes. Te avisaremos apenas termine la revisión.
+          </app-notice-banner>
+        }
+      </div>
+
+      <aside class="side">
+        <app-card heading="Mis ganancias" data-testid="earnings">
           @if (earnings(); as e) {
-            <dl class="earnings">
-              <dt>Neto total</dt>
-              <dd>{{ e.totalNet | currency }}</dd>
+            <div class="net">
+              <span class="sw-text-support">Neto total</span>
+              <span class="net-value">{{ e.totalNet | currency }}</span>
+            </div>
+            <dl class="sw-details">
               <dt>Por cobrar</dt>
               <dd>{{ e.pendingNet | currency }}</dd>
               <dt>Pagado</dt>
               <dd>{{ e.paidNet | currency }}</dd>
             </dl>
           } @else {
-            <p>No se pudo cargar el resumen de ganancias.</p>
+            <app-notice-banner tone="error" icon="wifi_off">
+              No se pudo cargar el resumen de ganancias.
+            </app-notice-banner>
           }
-        </mat-card-content>
-        <mat-card-actions>
-          <a mat-button routerLink="/driver/earnings">Ver liquidaciones</a>
-        </mat-card-actions>
-      </mat-card>
+          <div cardActions>
+            <a mat-stroked-button appButton="secondary" block routerLink="/driver/earnings">
+              Ver liquidaciones
+            </a>
+          </div>
+        </app-card>
+
+        <nav class="shortcuts" aria-label="Accesos rápidos">
+          <a mat-flat-button appButton="soft" block routerLink="/driver/trips">
+            <mat-icon>calendar_month</mat-icon>
+            Mis viajes
+          </a>
+          <a mat-flat-button appButton="soft" block routerLink="/driver/availability">
+            <mat-icon>schedule</mat-icon>
+            Mi disponibilidad
+          </a>
+        </nav>
+      </aside>
     </div>
   }
 </section>
