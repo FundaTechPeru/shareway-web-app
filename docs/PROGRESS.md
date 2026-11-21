@@ -12,7 +12,8 @@ Decisions taken along the way are in [DECISIONS.md](DECISIONS.md).
 ### Phase 0 — project setup (`feature/project-setup`)
 
 - SCSS instead of CSS, Angular Material (Material 3) with a ShareWay theme
-  (teal `#0F766E`, amber `#F59E0B`).
+  (teal `#0F766E`, amber `#F59E0B`); replaced by the style guide colors in
+  the UI style guide phase (see DECISIONS.md).
 - gts (Google TypeScript Style Guide) with `lint`, `fix` and `clean` scripts;
   LF line endings enforced with `.gitattributes`.
 - Environments with `apiBaseUrl` and `proxy.conf.json` (`/api` → API Gateway)
